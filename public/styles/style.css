@@ -1,0 +1,35 @@
+
+@media (max-width: 767px) {
+    .vacio{ height: 50px; }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .vacio{ height: 100px; }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .vacio{ height: 150px; }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .vacio{ height: 200px; }
+}
+
+.color{ width: 50px; height: 50px; }
+
+.inicio{
+    position: relative;
+    top: 10px;
+    left: 10px;
+}
+
+.help-block{ color: red; }
+
+.contenido {
+    overflow:hidden;
+    white-space:nowrap; /* Indicamos que no realice salto de linea si no cabe en la anchura indicada */
+    text-overflow: ellipsis;
+}
