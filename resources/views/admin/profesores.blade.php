@@ -4,11 +4,19 @@
     @parent
 
     <title>Profesores</title>
+    <style>
+        .row{
+            margin-left: 0;
+            margin-right: 0;
+        }
+    </style>
 
 
 @stop
 
 @section('pagina')
+
+    <div class="separacion-top"></div>
 
     <div class="col-sm-8 col-sm-offset-2">
 

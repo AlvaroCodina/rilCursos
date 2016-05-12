@@ -4,11 +4,19 @@
     @parent
 
     <title>Cursos</title>
+    <style>
+        .row{
+            margin-left: 0;
+            margin-right: 0;
+        }
+    </style>
 
 
 @stop
 
 @section('pagina')
+
+    <div class="separacion-top"></div>
 
     <div class="col-sm-8 col-sm-offset-2">
 
@@ -66,14 +74,12 @@
                     serverSide: true,
                     ajax: '{!! route('datatables.data') !!}',
                     columns: [
-                        { data: 'numMax', name: 'numMax' },
-                        { data: 'numMin', name: 'numMin' },
+                        { data: 'numMax', name: 'numMax', width: '50px' },
+                        { data: 'numMin', name: 'numMin', width: '50px' },
                         { data: 'fechaInicio', name: 'fechaInicio' },
                         { data: 'duracion', name: 'duracion' },
                         { data: 'resumen', name: 'resumen' },
-                        { data: 'lugar', name: 'lugar' },
                         { data: 'horario', name: 'horario' },
-                        { data: 'precios', name: 'precios' },
                         { data: 'slug', name: 'slug' },
                         {
                             data: "id",

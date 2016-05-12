@@ -6,7 +6,7 @@
 
 </div>
 <div>
-    <table class="table table-striped table-bordered dt-responsive nowrap" id="cursos-table">
+    <table class="table table-striped table-bordered dt-responsive nowrap" id="cursos-table" style="width: 100%;">
         <thead>
         <tr>
             <th>Num Max</th>
@@ -14,9 +14,7 @@
             <th>fechaInicio</th>
             <th>duracion</th>
             <th>resumen</th>
-            <th>lugar</th>
             <th>horario</th>
-            <th>precios</th>
             <th>slug</th>
             <th>Ver Alumnos</th>
             <th>Editar</th>

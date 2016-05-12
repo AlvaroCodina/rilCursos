@@ -6,7 +6,7 @@
 
 </div>
 <div>
-    <table class="table table-striped table-bordered dt-responsive nowrap" id="categorias-table">
+    <table class="table table-striped table-bordered dt-responsive nowrap" id="categorias-table" style="width: 100%;">
         <thead>
         <tr>
             <th>Nombre</th>

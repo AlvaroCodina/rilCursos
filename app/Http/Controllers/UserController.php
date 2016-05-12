@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
@@ -20,6 +21,9 @@ class UserController extends Controller
 
     public function login()
     {
+        if(Auth::user()){
+            return Redirect('/cursos');
+        }
         return view('auth.login');
     }
 
@@ -42,19 +46,17 @@ class UserController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
-            return redirect('/login')
-                ->withErrors($validator)->withInput();
+            Input::flash();
+            return view('auth.login')->withInput(Input::all())->withErrors($validator);
         }
 
         $credentials  = ['email' => $request->get('email'), 'password' => $request->get('password')];
 
         if( Auth::guard('web')->attempt($credentials) ){
             return Redirect()->back();
-            //return Redirect::to(URL::previous());
         }else{
-            return redirect('/login')
-                ->withErrors(['errors' => 'Login Inválido'])
-                ->withInput();
+            Input::flash();
+            return view('auth.login')->withInput(Input::all())->with('valido', 'El email o la contraseña no son correctos!');
         }
 
     }
@@ -73,8 +75,8 @@ class UserController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
-            return redirect('/register')
-                ->withErrors($validator)->withInput();
+            Input::flash();
+            return view('auth.register')->withInput(Input::all())->withErrors($validator);
         }
 
         $request->merge(['password' => Hash::make($request->password)]);

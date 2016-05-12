@@ -1,6 +1,18 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
+        {!! Html::style('bootstrap/css/bootstrap.min.css') !!}
+        {!! Html::style('bootstrap/css/bootstrap-theme.min.css') !!}
+        {!! Html::style('styles/style.css') !!}
+
+</head>
+<body>
+
+    <div class="vacio"></div>
+
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -51,4 +63,9 @@
             </div>
         </div>
     </div>
-@endsection
+
+    <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
+    {!! Html::script('bootstrap/js/bootstrap.min.js') !!}
+
+</body>
+</html>

@@ -10,16 +10,14 @@
 
 @section('pagina')
 
-    <div class="container-fluid">
+    <div class="separacion-top"></div>
 
-        <div class="col-lg-12 vacio"></div>
-
-        <h1 class="text-center">{{ $categoria->nombre }}</h1>
-
+    <div class="container">
+        <h3 class="text-center">{{ $categoria->nombre }}</h3><br>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
                 <div class="panel panel-success">
-                    <div class="panel-heading">{{ $categoria->nombre }}</div>
+                    <div class="panel panel-heading">{{ $categoria->nombre }}</div>
                     <div class="panel-body">
                         <p>{{ $categoria->descripcion }}</p>
                         <div class="color" style="background-color: {{ $categoria->color }}"></div>
@@ -31,7 +29,7 @@
             </div>
         </div>
 
-        <div class="col-lg-12 vacio"></div>
+        <div class="separacion-top"></div>
 
         <h1 class="text-center">Cursos de {{ $categoria->nombre }}</h1>
 

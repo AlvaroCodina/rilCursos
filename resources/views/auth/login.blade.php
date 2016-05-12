@@ -8,6 +8,9 @@
 @stop
 
 @section('pagina')
+
+    <div class="vacio"></div>
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -16,6 +19,14 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {!! csrf_field() !!}
+
+                        @if(isset($valido))
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-md-6 invalido">
+                                    <p>{{ $valido }}</p>
+                                </div>
+                            </div>
+                        @endif
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">E-Mail Address</label>

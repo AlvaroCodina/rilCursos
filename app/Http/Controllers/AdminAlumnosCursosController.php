@@ -9,6 +9,7 @@ use App\UsersCursos;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
 class AdminAlumnosCursosController extends Controller
 {
@@ -55,14 +56,25 @@ class AdminAlumnosCursosController extends Controller
         $curso = Cursos::find($id);
         $datos = UsersCursos::CountAlumnos($id);
 
+        $dts = [];
+
+        foreach($lista as $user){
+            array_push($dts, array('id' => $user->id, 'name' => $user->name, 'apellidos' => $user->apellidos, 'email' => $user->email, 'telefono' => $user->telefono, 'pago' => $this->getPago($curso->id, $user->id), 'ids' => $id."|".$user->id));
+        }
+
         /*$listaEspera = Cursos::find($id)->listaesperacursos()->get();
         $espera = array();
         foreach($listaEspera as $dts){
             $espera[] = User::find($dts->alumnos_id);
         }*/
 
-        return view('admin.listado')->with('lista', $lista)->with('curso', $curso)->with('numAlumnos', $datos);     //->with('espera', $espera)
+        return view('admin.listado')->with('lista', $dts)->with('curso', $curso)->with('numAlumnos', $datos);     //->with('espera', $espera)
 
+    }
+
+    function getPago($idCurso, $idUser){
+        $dts = DB::table('users_cursos')->where('cursos_id', $idCurso)->where('users_id', $idUser)->pluck('pago');
+        return $dts[0];
     }
 
     /**

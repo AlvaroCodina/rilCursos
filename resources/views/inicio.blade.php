@@ -45,7 +45,7 @@
         <div class="row">
             @foreach($categorias as $dts)
                 <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="panel panel-success">
+                    <div class="panel panel-success" style="height: 200px; max-height: 200px;">
                         <div class="panel-heading">{{ $dts->nombre }}</div>
                         <div class="panel-body">{{ $dts->descripcion }}</div>
                         <a href="/categorias/{{ $dts->slug }}" class="btn btn-primary">Más Información</a>

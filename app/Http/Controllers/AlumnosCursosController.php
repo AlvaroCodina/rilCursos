@@ -37,7 +37,7 @@ class AlumnosCursosController extends Controller
 
     public function postPagar($idCurso, $idAlumno){
         DB::table('users_cursos')->insert(
-            array('cursos_id' => $idCurso, 'users_id' => $idAlumno)
+            array('cursos_id' => $idCurso, 'users_id' => $idAlumno, 'pago' => 1)
         );
         return redirect("/cursos");
     }

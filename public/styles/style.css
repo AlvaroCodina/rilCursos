@@ -33,3 +33,9 @@
     white-space:nowrap; /* Indicamos que no realice salto de linea si no cabe en la anchura indicada */
     text-overflow: ellipsis;
 }
+
+.separacion-top{ height: 50px; }
+
+.invalido{
+    color: red;
+}

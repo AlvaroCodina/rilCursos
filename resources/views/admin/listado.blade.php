@@ -10,6 +10,8 @@
 
 @section('pagina')
 
+    <div class="separacion-top"></div>
+
 <div class="col-sm-8 col-sm-offset-2">
 
     <div class="page-header">
@@ -25,6 +27,7 @@
                 <th>Apellidos</th>
                 <th>Email</th>
                 <th>Teléfono</th>
+                <th>Pagó</th>
                 <th>Quitar</th>
             </tr>
             </thead>
@@ -32,12 +35,13 @@
 
             @foreach ($lista as $user)
                 <tr>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->apellidos }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->telefono }}</td>
+                    <td>{{ $user['name'] }}</td>
+                    <td>{{ $user['apellidos'] }}</td>
+                    <td>{{ $user['email'] }}</td>
+                    <td>{{ $user['telefono'] }}</td>
+                    <td>{{ $user['pago'] }}</td>
                     <td>
-                        {{ Form::open(array('route' => array('admin.alumnoscursos.destroy', $curso->id."|".$user->id), 'method' => 'delete')) }}
+                        {{ Form::open(array('route' => array('admin.alumnoscursos.destroy', $user['ids']), 'method' => 'delete')) }}
                         <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span> Quitar</button>
                         {{ Form::close() }}
                     </td>

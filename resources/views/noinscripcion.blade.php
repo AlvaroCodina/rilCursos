@@ -10,6 +10,8 @@
 
 @section('pagina')
 
+    <div class="vacio"></div>
+
     <div class="container">
         <div class="row">
 
