@@ -22,6 +22,14 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/admin/login') }}">
                             {!! csrf_field() !!}
 
+                            @if(isset($valido))
+                                <div class="form-group">
+                                    <div class="col-md-offset-4 col-md-6 invalido">
+                                        <p>{{ $valido }}</p>
+                                    </div>
+                                </div>
+                            @endif
+
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label">E-Mail Address</label>
 

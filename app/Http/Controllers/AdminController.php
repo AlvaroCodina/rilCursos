@@ -44,10 +44,8 @@ class AdminController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
-            //$mes = $validator->messages();
-            //dd($mes->get('email'));
-            return redirect('/admin/login')
-                ->withErrors($validator)->withInput();
+            Input::flash();
+            return view('auth.login-admin')->withInput(Input::all())->withErrors($validator);
         }
 
         $credentials  = ['email' => $request->get('email'), 'password' => $request->get('password')];
@@ -55,38 +53,14 @@ class AdminController extends Controller
         if( Auth::guard('admin')->attempt($credentials) ){
             return redirect('/admin');
         }else{
-            return redirect('/admin/login')
-                ->withErrors(['errors' => 'Login Inválido'])
-                ->withInput();
+            Input::flash();
+            return view('auth.login-admin')->withInput(Input::all())->with('valido', 'El email o la contraseña no son correctos!');
         }
-
-
-        /*$validator = validator($request->all(), [
-            'email' => 'required|min:3|max:100',
-            'password' => 'required|min:3|max:100',
-        ]);
-
-        if($validator->fails()){
-            return redirect('/admin/login')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $credentials  = ['email' => $request->get('email'), 'password' => $request->get('password')];
-
-        if( auth()->guard('admin')->attempt($credentials) ){
-            return redirect('/admin');
-        }else{
-            return redirect('/admin/login')
-                ->withErrors(['errors' => 'Login Inválido'])
-                ->withInput();
-        }*/
 
     }
 
     public function logout()
     {
-        //auth->guard('admin')->logout();
         Auth::guard('admin')->logout();
         return redirect('/admin/login');
     }

@@ -30,6 +30,13 @@
                             <img src="{{ route('curso.imagen', ['filename' => 'curso-'.$curso->slug.'.jpg']) }}" class="img-responsive" />
                         @endif
                         <a href="/pagar/{{ $curso->slug }}" class="btn btn-primary">Pagar</a>
+                        @if(isset($msg))
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-md-6 invalido">
+                                    <p>{{ $msg }}</p>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

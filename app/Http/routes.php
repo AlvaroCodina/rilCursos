@@ -41,6 +41,18 @@ Route::any('/cursos', 'CursosController@index');
 Route::any('/home', 'CursosController@index');
 Route::any('/', 'CursosController@index');
 
+Route::group(['middleware' => 'web'], function () {
+    Route::group(['middleware' => 'auth:web'], function () {
+        Route::get('/user', 'UserController@index');
+    });
+    Route::get('/login', 'UserController@login');
+    Route::get('/register', 'UserController@register');
+    Route::post('/login', 'UserController@postLogin');
+    Route::post('/register', 'UserController@postRegister');
+    Route::get('/logout', 'UserController@logout');
+    Route::post('/pagar/{idCurso}/{idAlumno}', 'AlumnosCursosController@postPagar');
+});
+
 Route::group(['middleware' => 'admin'], function () {
     Route::group(['middleware' => 'auth:admin'], function () {
         Route::get('/admin', 'AdminController@index');
@@ -55,17 +67,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('/admin/alumnoscursos', 'AdminAlumnosCursosController');
 });
 
-Route::group(['middleware' => 'web'], function () {
-    Route::group(['middleware' => 'auth:web'], function () {
-        Route::get('/user', 'UserController@index');
-    });
-    Route::get('/login', 'UserController@login');
-    Route::get('/register', 'UserController@register');
-    Route::post('/login', 'UserController@postLogin');
-    Route::post('/register', 'UserController@postRegister');
-    Route::get('/logout', 'UserController@logout');
-    Route::post('/pagar/{idCurso}/{idAlumno}', 'AlumnosCursosController@postPagar');
-});
+
 
 
 
