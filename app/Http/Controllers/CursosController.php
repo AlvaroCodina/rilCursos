@@ -34,10 +34,11 @@ class CursosController extends Controller
     public function index()
     {
         $ultimosCursos = DB::table('cursos')
+            ->join('categorias', 'cursos.idCategoria', '=', 'categorias.id')
+            ->select('cursos.*', 'categorias.nombre', 'categorias.color')
             ->orderBy('fechaInicio', 'desc')
-            //->having('fechaInicio', '>', Carbon::now())
             ->take(3)
-            ->get();                    //tendre que poner un límite 3 o 6
+            ->get();
 
         $categorias = Categorias::all();
 

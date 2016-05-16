@@ -42,13 +42,13 @@ class AdminProfesoresController extends Controller
         $rules = array(
             'nombre'    => 'required',
             'apellidos' => 'required',
-            'email'     => 'required|email',
-            //'password'  => 'required',
+            'email'     => 'required|email|unique:profesores',
         );
 
         $messages = [
             'required' => 'El campo :attribute es requerido.',
             'email' => 'El campo :attribute tiene que ser un email válido.',
+            'unique' => 'El email ya está en uso.',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -102,7 +102,6 @@ class AdminProfesoresController extends Controller
             'nombre'    => 'required',
             'apellidos' => 'required',
             'email'     => 'required|email',
-            //'password'  => 'required',
         );
 
         $messages = [

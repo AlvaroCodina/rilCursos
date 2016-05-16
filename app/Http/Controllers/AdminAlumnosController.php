@@ -44,13 +44,17 @@ class AdminAlumnosController extends Controller
             'name'      => 'required',
             'apellidos' => 'required',
             'telefono'  => 'required|integer',
-            'email'     => 'required',
+            'email'     => 'required|email|unique:users',
             'password'  => 'required',
+            'password_confirmation'  => 'required|same:password',
         );
 
         $messages = [
             'required' => 'El campo :attribute es requerido.',
             'integer' => 'El campo :attribute debe ser numérico.',
+            'same' => 'Las contraseñas tienen que coincidir.',
+            'email' => 'El email tiene que ser válido.',
+            'unique' => 'El email ya está en uso.',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -106,13 +110,14 @@ class AdminAlumnosController extends Controller
             'name'      => 'required',
             'apellidos' => 'required',
             'telefono'  => 'required|integer',
-            'email'     => 'required',
+            'email'     => 'required|email',
             'password'  => 'required',
         );
 
         $messages = [
             'required' => 'El campo :attribute es requerido.',
             'integer' => 'El campo :attribute debe ser numérico.',
+            'email' => 'El email tiene que ser válido.',
         ];
 
         $validator = Validator::make(Input::all(), $rules, $messages);

@@ -29,7 +29,7 @@
                         @if(Storage::disk('local')->has('curso-'.$curso->slug.'.jpg'))
                             <img src="{{ route('curso.imagen', ['filename' => 'curso-'.$curso->slug.'.jpg']) }}" class="img-responsive" />
                         @endif
-                        <a href="/pagar/{{ $curso->slug }}" class="btn btn-primary">Pagar</a>
+                        <a href="/pagar/{{ $curso->slug }}" class="btn btn-primary">Confirmar Inscripción</a>
                         @if(isset($msg))
                             <div class="form-group">
                                 <div class="col-md-offset-4 col-md-6 invalido">

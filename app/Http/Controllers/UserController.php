@@ -67,11 +67,13 @@ class UserController extends Controller
             'name' => 'required|min:3|max:100',
             'email' => 'required|min:3|max:100',
             'password' => 'required|min:3|max:100',
+            'password_confirmation' => 'required|same:password',
         );
         $messages = [
             'required' => 'El campo :attribute es requerido.',
             'min' => 'El campo :attribute tiene que tener 3 caracteres mínimo.',
             'max' => 'El campo :attribute tiene que tener 100 caracteres máximo.',
+            'same' => 'Las contraseñas tienen que coincidir.',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {

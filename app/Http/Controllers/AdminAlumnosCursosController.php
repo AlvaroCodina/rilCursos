@@ -4,15 +4,31 @@ namespace App\Http\Controllers;
 
 use App\AlumnosCursos;
 use App\Cursos;
+use App\Plantillas;
 use App\User;
 use App\UsersCursos;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AdminAlumnosCursosController extends Controller
 {
+
+    public function getTextoPago($pago, $ids){
+        $dts = explode("|", $ids);
+        if($pago==0){ $r=1; }else{ $r=0; }
+        DB::table('users_cursos')->where('cursos_id', $dts[0])->where('users_id', $dts[1])->update(array('pago' => $r));
+        return redirect('/admin/alumnoscursos/' . $dts[0]);
+    }
+
+    public function insertAlumnoCurso($idCurso, $idAlumno){
+        DB::table('users_cursos')->insert(
+            array('cursos_id' => $idCurso, 'users_id' => $idAlumno, 'pago' => 0)
+        );
+        return redirect('/admin/alumnoscursos/' . $idCurso);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -55,6 +71,8 @@ class AdminAlumnosCursosController extends Controller
         $lista = Cursos::find($id)->users()->get();
         $curso = Cursos::find($id);
         $datos = UsersCursos::CountAlumnos($id);
+        $alumnos = User::all();
+        $plantillas = Plantillas::all();
 
         $dts = [];
 
@@ -68,7 +86,7 @@ class AdminAlumnosCursosController extends Controller
             $espera[] = User::find($dts->alumnos_id);
         }*/
 
-        return view('admin.listado')->with('lista', $dts)->with('curso', $curso)->with('numAlumnos', $datos);     //->with('espera', $espera)
+        return view('admin.listado')->with('lista', $dts)->with('curso', $curso)->with('numAlumnos', $datos)->with('alumnos', $alumnos)->with('plantillas', $plantillas);     //->with('espera', $espera)
 
     }
 

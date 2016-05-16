@@ -25,11 +25,16 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function userscursos()
+    {
+        return $this->hasMany('App\UsersCursos');
+    }
+
     /**
      * Relación con Cursos
      */
     public function cursos()
     {
-        return $this->belongsToMany('App\Cursos');
+        return $this->belongsToMany('App\Cursos','users_cursos','users_id');
     }
 }

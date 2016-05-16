@@ -1,6 +1,10 @@
 <?php
 
 
+use App\Categorias;
+use App\Cursos;
+use Illuminate\Support\Facades\Mail;
+
 Route::get('/categorias/{slug}','CategoriasController@getCategoria')->where('slug', '[\s\S]+');
 Route::get('/cursos/{slug}','CursosController@getCurso')->where('slug', '[\s\S]+');
 Route::get('/inscribirse/{slug}','AlumnosCursosController@getInscribirse')->where('slug', '[\s\S]+');
@@ -50,7 +54,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/login', 'UserController@postLogin');
     Route::post('/register', 'UserController@postRegister');
     Route::get('/logout', 'UserController@logout');
-    Route::post('/pagar/{idCurso}/{idAlumno}', 'AlumnosCursosController@postPagar');
+    Route::post('/pagar', 'AlumnosCursosController@postPagar');
 });
 
 Route::group(['middleware' => 'admin'], function () {
@@ -65,7 +69,21 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('/admin/categorias', 'AdminCategoriasController');
     Route::resource('/admin/profesores', 'AdminProfesoresController');
     Route::resource('/admin/alumnoscursos', 'AdminAlumnosCursosController');
+    Route::resource('/admin/mails', 'AdminMailsController');
+    Route::get('/admin/cursosalumnos/{id}', 'AlumnosCursosController@getCursosAlumno')->where('id', '[0-9]+');
+    Route::any('/admin/cursosalumnos/{ids}', 'AlumnosCursosController@deleteCursosAlumno')->where('ids', '[\s\S]+');
+    Route::post('/alumnoscursos/textopago/{pago}/{ids}', 'AdminAlumnosCursosController@getTextoPago');
+    Route::any('/alumnoscursos/insertaralumno/{idCurso}/{idAlumno}', 'AdminAlumnosCursosController@insertAlumnoCurso');
+    Route::any('/verplantilla/{idPlantilla}/{id}', 'AdminMailsController@getTemplate');
+
+
 });
+
+/* API mails */
+
+
+Route::post('/alumnoscursos/emails', 'AdminMailsController@sendMails');
+
 
 
 

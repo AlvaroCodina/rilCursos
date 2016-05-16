@@ -22,7 +22,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin.index');
+        return view('admin.cursos');
     }
 
     public function login()
@@ -51,7 +51,7 @@ class AdminController extends Controller
         $credentials  = ['email' => $request->get('email'), 'password' => $request->get('password')];
 
         if( Auth::guard('admin')->attempt($credentials) ){
-            return redirect('/admin');
+            return redirect('/admin/cursos');
         }else{
             Input::flash();
             return view('auth.login-admin')->withInput(Input::all())->with('valido', 'El email o la contraseña no son correctos!');

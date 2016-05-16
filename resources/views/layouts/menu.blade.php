@@ -29,26 +29,24 @@
                 </button>
             </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li id="itemuno"><a href="/admin">Home</a></li>
                     <li id="itemdos"><a href="/admin/categorias">Categorias</a></li>
                     <li id="itemtres"><a href="/admin/cursos">Cursos</a></li>
                     <li id="itemcuatro"><a href="/admin/alumnos">Alumnos</a></li>
                     <li id="itemcinco"><a href="/admin/profesores">Profesores</a></li>
+                    <li id="itemseis"><a href="/admin/mails">Mails</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ URL::previous() }}"><span class="glyphicon glyphicon-menu-left"></span> Atrás</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ auth()->guard('admin')->user()->name }} <span class="caret"></span>
-                            </a>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            {{ auth()->guard('admin')->user()->name }} <span class="caret"></span>
+                        </a>
 
-                            <ul class="dropdown-menu" role="menu">
-                                <li id="logout"><a href="/admin/logout"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
-                            </ul>
-                        </li>
+                        <ul class="dropdown-menu" role="menu">
+                            <li id="logout"><a href="/admin/logout"><span class="glyphicon glyphicon-log-out"></span> Cerrar Sesión</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -66,6 +66,14 @@
                 @if ($errors->has('password')) <p class="help-block">{{ $errors->first('password') }}</p> @endif
             </div>
 
+            @if($alumno == false)
+            <div class="form-group">
+                {{ Form::label('password_confirmation', 'Confirmar Contraseña') }}
+                {{ Form::text('password_confirmation', \Illuminate\Support\Facades\Input::old('password_confirmation'), array('class' => 'form-control', 'placeholder' => 'Confirmar Contraseña')) }}
+                @if ($errors->has('password_confirmation')) <p class="help-block">{{ $errors->first('password_confirmation') }}</p> @endif
+            </div>
+            @endif
+
             <div class="form-group">
                 {{ Form::label('camara', 'Camara') }}
                 {{ Form::text('camara', \Illuminate\Support\Facades\Input::old('camara'), array('class' => 'form-control', 'placeholder' => '(opcional)')) }}
@@ -124,6 +132,12 @@
                         { data: 'telefono', name: 'telefono' },
                         { data: 'email', name: 'email' },
                         { data: 'camara', name: 'camara' },
+                        {
+                            data: "id",
+                            "render": function (data) {
+                                return "<form action='/admin/cursosalumnos/" + data + "' method='GET'><button type='submit' class='btn btn-info'>Ver cursos</button></form>";
+                            }
+                        },
                         {
                             data: "id",
                             "render": function (data) {

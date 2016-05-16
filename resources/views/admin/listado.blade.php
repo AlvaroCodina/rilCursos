@@ -15,8 +15,23 @@
 <div class="col-sm-8 col-sm-offset-2">
 
     <div class="page-header">
-        <h1><span class="glyphicon glyphicon-th-list"></span> Listado de los Alumnos del Curso: {{ $curso->categoria }}<small> {{ $curso->fechaInicio }}</small></h1>
+        <h1><span class="glyphicon glyphicon-th-list"></span> Listado de los Alumnos del Curso: {{ $curso->resumen }}<small> {{ $curso->fechaInicio }}</small></h1>
         <h3>Alumnos inscritos: {{ $numAlumnos }}, Número mínimo: {{ $curso->numMin }}, Número máximo: {{ $curso->numMax }}</h3>
+            <form action="/alumnoscursos/emails" method="post">
+
+                <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                <input type="hidden" name="idCurso" value="{{ $curso->id }}">
+
+                <div class="form-group">
+                    <select name="plantillas" id="plantillas" class="form-control">
+                        @foreach($plantillas as $plantilla)
+                            <option value="{{ $plantilla->id }}">{{ $plantilla->nombre }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-info">Enviar <span class="glyphicon glyphicon-envelope"></span></button>
+            </form>
     </div>
 
     <div>
@@ -39,7 +54,16 @@
                     <td>{{ $user['apellidos'] }}</td>
                     <td>{{ $user['email'] }}</td>
                     <td>{{ $user['telefono'] }}</td>
-                    <td>{{ $user['pago'] }}</td>
+                    <td>
+                        <form action="/alumnoscursos/textopago/{{ $user['pago'] }}/{{ $user['ids'] }}" method="post">
+                            <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                            @if($user['pago']==0)
+                                <button type="submit" class="btn btn-warning">No pagó</button>
+                            @else
+                                <button type="submit" class="btn btn-success">Si pagó</button>
+                            @endif
+                        </form>
+                    </td>
                     <td>
                         {{ Form::open(array('route' => array('admin.alumnoscursos.destroy', $user['ids']), 'method' => 'delete')) }}
                         <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span> Quitar</button>
@@ -74,6 +98,30 @@
         </table>
     </div>
 
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Añadir Alumno</button>
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Listado de Alumnos</h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                    @foreach($alumnos as $alumno)
+                        <a href="/alumnoscursos/insertaralumno/{{ $curso->id }}/{{ $alumno->id }}"><li class="list-group-item">{{ $alumno->name . ' ' . $alumno->apellidos . ' | ' . $alumno->email}}</li></a>
+                    @endforeach
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 </div>
 

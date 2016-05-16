@@ -15,7 +15,6 @@
     <div class="container">
         <div class="navbar-header">
 
-            <!-- Collapsed Hamburger -->
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                 <span class="sr-only">Toggle Navigation</span>
                 <span class="icon-bar"></span>
@@ -23,7 +22,6 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/cursos') }}">
                 Cursos
             </a>
@@ -31,12 +29,9 @@
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
 
-            <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
-                <!-- Authentication Links -->
-                <li><a href="{{ URL::previous() }}"><span class="glyphicon glyphicon-menu-left"></span> Atrás</a></li>
                 @if (Auth::guest())
-                    <li><a href="{{ url('/login') }}">Login</a></li>
+                    <li><a href="{{ url('/login') }}">Iniciar Sesión</a></li>
                     <li><a href="{{ url('/register') }}">Registrarse</a></li>
                 @else
                     <li class="dropdown">
@@ -45,7 +40,7 @@
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                            <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Cerrar Sesión</a></li>
                         </ul>
                     </li>
                 @endif
@@ -57,7 +52,6 @@
 @yield('pagina')
 
 @section('footer')
-
     <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
     {!! Html::script('bootstrap/js/bootstrap.min.js') !!}
 

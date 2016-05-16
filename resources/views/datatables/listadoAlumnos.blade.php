@@ -14,6 +14,7 @@
             <th>Teléfono</th>
             <th>email</th>
             <th>Cámara</th>
+            <th>Ver cursos</th>
             <th>Editar</th>
             <th>Borrar</th>
         </tr>
