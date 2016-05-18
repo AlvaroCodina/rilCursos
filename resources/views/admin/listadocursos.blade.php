@@ -15,7 +15,7 @@
     <div class="col-sm-8 col-sm-offset-2">
 
         <div class="page-header">
-            <h1><span class="glyphicon glyphicon-th-list"></span> Listado de los Cursos del Alumno: {{ $alumno->name . ' ' . $alumno->apellidos }}</h1>
+            <h1><span class="glyphicon glyphicon-th-list"></span> Cursos del Alumno: {{ $alumno->name . ' ' . $alumno->apellidos }}</h1>
             <h3>Cursos en los que está inscrito:</h3>
         </div>
 
@@ -43,7 +43,7 @@
                         <td>
                             <form method="post" action="/admin/cursosalumnos/{{ $alumno->id . '|' . $curso->id }}">
                                 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                                <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span> Quitar</button>
+                                <button type="submit" class="btn btn-danger"><span class="fi-x"></span></button>
                             </form>
                         </td>
                     </tr>

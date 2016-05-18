@@ -1,7 +1,7 @@
 <div class="col-sm-8 col-sm-offset-2">
 
     <div class="page-header">
-        <h1><span class="glyphicon glyphicon-th-list"></span> Listado de Alumnos</h1>
+        <h1><span class="fi-torsos-all"></span> Listado de Alumnos</h1>
     </div>
 
 </div>
@@ -12,7 +12,7 @@
             <th>Nombre</th>
             <th>Apellidos</th>
             <th>Teléfono</th>
-            <th>email</th>
+            <th>Email</th>
             <th>Cámara</th>
             <th>Ver cursos</th>
             <th>Editar</th>

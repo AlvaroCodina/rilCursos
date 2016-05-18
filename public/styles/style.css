@@ -123,8 +123,9 @@
 
 .acabado{ opacity: 0.7; }
 
-
-
+.cke_button__shortcode1 .cke_button_label, .cke_button__shortcode2 .cke_button_label {
+    display: inline !important;
+}
 
 
 

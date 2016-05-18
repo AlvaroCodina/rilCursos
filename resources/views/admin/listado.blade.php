@@ -15,23 +15,20 @@
 <div class="col-sm-8 col-sm-offset-2">
 
     <div class="page-header">
-        <h1><span class="glyphicon glyphicon-th-list"></span> Listado de los Alumnos del Curso: {{ $curso->resumen }}<small> {{ $curso->fechaInicio }}</small></h1>
-        <h3>Alumnos inscritos: {{ $numAlumnos }}, Número mínimo: {{ $curso->numMin }}, Número máximo: {{ $curso->numMax }}</h3>
-            <form action="/alumnoscursos/emails" method="post">
+        <h1><span class="glyphicon glyphicon-th-list"></span> Alumnos del Curso: {{ $curso->resumen }}<small> {{ $curso->fechaInicio }}</small></h1>
+        <h3>Número mínimo: {{ $curso->numMin }}, Número máximo: {{ $curso->numMax }}</h3>
 
-                <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                <input type="hidden" name="idCurso" value="{{ $curso->id }}">
+        <input type="hidden" id="idCurso" name="idCurso" value="{{ $curso->id }}">
 
-                <div class="form-group">
-                    <select name="plantillas" id="plantillas" class="form-control">
-                        @foreach($plantillas as $plantilla)
-                            <option value="{{ $plantilla->id }}">{{ $plantilla->nombre }}</option>
-                        @endforeach
-                    </select>
-                </div>
+        <div class="form-group">
+            <select name="plantillas" id="plantillas" class="form-control">
+                @foreach($plantillas as $plantilla)
+                    <option value="{{ $plantilla->id }}">{{ $plantilla->nombre }}</option>
+                @endforeach
+            </select>
+        </div>
 
-                <button type="submit" class="btn btn-info">Enviar <span class="glyphicon glyphicon-envelope"></span></button>
-            </form>
+        <button class="btn btn-info" id="enviar">Enviar <span class="fi-mail"></span></button>
     </div>
 
     <div>
@@ -44,6 +41,7 @@
                 <th>Teléfono</th>
                 <th>Pagó</th>
                 <th>Quitar</th>
+                <th>Seleccionar</th>
             </tr>
             </thead>
             <tbody>
@@ -65,34 +63,35 @@
                         </form>
                     </td>
                     <td>
-                        {{ Form::open(array('route' => array('admin.alumnoscursos.destroy', $user['ids']), 'method' => 'delete')) }}
-                        <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span> Quitar</button>
-                        {{ Form::close() }}
+                        <button class='btn btn-danger' data-toggle='modal' data-target='#quitarAlumno' onclick='modal("{{ $user['ids'] }}");'><span class='fi-x'></span></button>
                     </td>
+                    <td><input type="checkbox" onclick="check(this);" class="chk" value="{{ $user['email'] }}"></td>
                 </tr>
             @endforeach
 
-            <!--<tr>
+            <tr>
+                <td>-</td>
                 <td>-</td>
                 <td>-</td>
                 <td>Lista de Espera</td>
                 <td>-</td>
                 <td>-</td>
+                <td>-</td>
             </tr>
 
-            for($i=0;$i< count($espera); $i++)
+            @for($i=0;$i< count($espera); $i++)
                 <tr>
-                    <td>{ { $espera[$i]->nombre }}</td>
-                    <td>{ { $espera[$i]->apellidos }}</td>
-                    <td>{ { $espera[$i]->email }}</td>
-                    <td>{ { $espera[$i]->telefono }}</td>
+                    <td>{{ $espera[$i]->name }}</td>
+                    <td>{{ $espera[$i]->apellidos }}</td>
+                    <td>{{ $espera[$i]->email }}</td>
+                    <td>{{ $espera[$i]->telefono }}</td>
+                    <td>-</td>
                     <td>
-                        { { Form::open(array('route' => array('alumnoscursos.destroy', $curso->id."|".$espera[$i]->id."|1"), 'method' => 'delete')) }}
-                        <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span> Quitar</button>
-                        { { Form::close() }}
+                        <button class='btn btn-danger' data-toggle='modal' data-target='#quitarAlumno' onclick='modal("{{ $curso->id."|".$espera[$i]->id."|1" }}");'><span class='fi-x'></span></button>
                     </td>
+                    <td><input type="checkbox" class="chk" value="{{ $espera[$i]->email }}"></td>
                 </tr>
-            endfor -->
+            @endfor
 
             </tbody>
         </table>
@@ -123,11 +122,80 @@
         </div>
     </div>
 
+    <div id="quitarAlumno" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Quitar el Alumno</h4>
+                </div>
+                <div class="modal-body">
+                    <p>¿Quitar al Alumno del curso?</p>
+                </div>
+                <div id="modal-append" class="modal-footer">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 
 @stop
 
 @section('footer')
     @parent
+
+    <script>
+
+        var arrayEmails = "";
+
+        function check(chk){
+            arrayEmails = arrayEmails.replace($(chk).val() + "|", "");
+            if(chk.checked){
+                arrayEmails = arrayEmails + $(chk).val() + "|";
+            }else{
+            }
+        }
+
+        $(document).ready(function(){
+
+
+
+            $('#enviar').click(function(){
+
+                if(arrayEmails != ""){
+                    $.ajax({
+                        url: "/alumnoscursos/emails",
+                        method: "POST",
+                        data:
+                        {
+                            emails : arrayEmails,
+                            id : $("#idCurso").val(),
+                            idPlantilla : $("#plantillas").val(),
+                        },
+                        datatype: "text"
+                    }).done(function() {
+                        alert( "success" );
+                    });
+                }
+                else{
+                    alert("No hay ningún alumno seleccionado!");
+                }
+            });
+
+        });
+
+        function modal(ids){
+            $("#modal-append").empty();
+            var form = "<form method='POST' action='/admin/listaespera/" + ids + "' style='float: right;'><input type='hidden' name='_token' value='{!! csrf_token() !!}'><input name='_method' type='hidden' value='DELETE'><button type='submit' class='btn btn-danger'></span> Borrar</button></form>";
+            var boton = "<button type='button' class='btn btn-default' data-dismiss='modal' style='float: left;'>Cancelar</button>";
+            $("#modal-append").append(form);
+            $("#modal-append").append(boton);
+        }
+
+    </script>
 
 @stop

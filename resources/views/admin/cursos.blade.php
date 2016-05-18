@@ -18,10 +18,12 @@
 
     <div class="separacion-top"></div>
 
+    @include('datatables.listadoCursos')
+
     <div class="col-sm-8 col-sm-offset-2">
 
         <div class="page-header">
-            <h1> @if($curso) <span class="glyphicon glyphicon-edit"></span> Editar {{ $curso->categoria }} @else <span class="glyphicon glyphicon-share"></span> Nuevo Curso @endif </h1>
+            <h1> @if($curso) <span class="fi-pencil"></span> Editar {{ $curso->categoria }} @else <span class="fi-plus"></span> Nuevo Curso @endif </h1>
         </div>
 
         <div>
@@ -31,7 +33,7 @@
                 @include('admin.form')
             @endif
         </div>
-
+        <div class="vacio"></div>
     </div>
 
     <div id="myModal" class="modal fade" role="dialog">
@@ -53,9 +55,7 @@
         </div>
     </div>
 
-    @include('datatables.listadoCursos')
 
-    <div class="vacio"></div>
 
 @stop
 
@@ -74,29 +74,29 @@
                     serverSide: true,
                     ajax: '{!! route('datatables.data') !!}',
                     columns: [
+                        { data: 'slug', name: 'slug' },
+                        { data: 'fechaInicio', name: 'fechaInicio' },
                         { data: 'numMax', name: 'numMax', width: '50px' },
                         { data: 'numMin', name: 'numMin', width: '50px' },
-                        { data: 'fechaInicio', name: 'fechaInicio' },
                         { data: 'duracion', name: 'duracion' },
                         { data: 'resumen', name: 'resumen' },
                         { data: 'horario', name: 'horario' },
-                        { data: 'slug', name: 'slug' },
                         {
                             data: "id",
                             "render": function (data) {
-                                return "<form action='/admin/alumnoscursos/" + data + "' method='GET'><button type='submit' class='btn btn-info'><span class='glyphicon glyphicon-list'></span> Ver alumnos</button></form>";
+                                return "<form action='/admin/alumnoscursos/" + data + "' method='GET'><button type='submit' class='btn btn-info'><span class='fi-list'></span> Ver alumnos</button></form>";
                             }
                         },
                         {
                             data: "id",
                             "render": function (data) {
-                                return "<form method='GET' action='/admin/cursos/" + data + "/edit'><button type='submit' class='btn btn-warning'><span class='glyphicon glyphicon-edit'></span> Editar</button></form>";
+                                return "<form method='GET' action='/admin/cursos/" + data + "/edit'><button type='submit' class='btn btn-warning'><span class='fi-pencil'></span> Editar</button></form>";
                             }
                         },
                         {
                             data: "id",
                             "render": function (data) {
-                                return "<button class='btn btn-danger' data-toggle='modal' data-target='#myModal' onclick='modal(" + data + ");'><span class='glyphicon glyphicon-remove-sign'></span> Borrar</button>";
+                                return "<button class='btn btn-danger' data-toggle='modal' data-target='#myModal' onclick='modal(" + data + ");'><span class='fi-x'></span></button>";
                             }
                         },
                     ]

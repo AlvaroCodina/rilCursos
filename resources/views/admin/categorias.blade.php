@@ -3,7 +3,7 @@
 @section('header')
     @parent
 
-    <title>Categorias</title>
+    <title>Categorías</title>
     <style>
         .row{
             margin-left: 0;
@@ -18,10 +18,12 @@
 
     <div class="separacion-top"></div>
 
+    @include('datatables.listadoCategorias')
+
     <div class="col-sm-8 col-sm-offset-2">
 
         <div class="page-header">
-            <h1> @if($categoria) <span class="glyphicon glyphicon-edit"></span> Editar {{ $categoria->nombre }} @else <span class="glyphicon glyphicon-share"></span> Nueva Categoria @endif </h1>
+            <h1> @if($categoria) <span class="fi-pencil"></span> Editar {{ $categoria->nombre }} @else <span class="fi-plus"></span> Nueva Categoría @endif </h1>
         </div>
 
         <div>
@@ -41,7 +43,7 @@
                 </div>
                 <div class="form-group">
                     <label for="descripcion">Descripción</label>
-                    <input type="text" name="descripcion" class="form-control" id="descripcion" placeholder="descripcion" value="@if($categoria){{ $categoria->descripcion }}@else{{ \Illuminate\Support\Facades\Input::old('descripcion') }}@endif"/>
+                    <input type="text" name="descripcion" class="form-control" id="descripcion" placeholder="descripción" value="@if($categoria){{ $categoria->descripcion }}@else{{ \Illuminate\Support\Facades\Input::old('descripcion') }}@endif"/>
                     @if ($errors->has('descripcion')) <p class="help-block">{{ $errors->first('descripcion') }}</p> @endif
                 </div>
                 <div class="form-group">
@@ -62,7 +64,7 @@
 
             </form>
         </div>
-
+        <div class="vacio"></div>
     </div>
 
     <div id="myModal" class="modal fade" role="dialog">
@@ -83,10 +85,6 @@
 
         </div>
     </div>
-
-    @include('datatables.listadoCategorias')
-
-    <div class="vacio"></div>
 
 @stop
 
@@ -118,13 +116,13 @@
                         {
                             data: "id",
                             "render": function (data) {
-                                return "<form action='/admin/categorias/" + data + "/edit' method='PUT'><button type='submit' class='btn btn-warning'><span class='glyphicon glyphicon-edit'></span> Editar</button></form>";
+                                return "<form action='/admin/categorias/" + data + "/edit' method='PUT'><button type='submit' class='btn btn-warning'><span class='fi-pencil'></span> Editar</button></form>";
                             }
                         },
                         {
                             data: "id",
                             "render": function (data) {
-                                return "<button class='btn btn-danger' data-toggle='modal' data-target='#myModal' onclick='modal(" + data + ");'><span class='glyphicon glyphicon-remove-sign'></span> Borrar</button>";
+                                return "<button class='btn btn-danger' data-toggle='modal' data-target='#myModal' onclick='modal(" + data + ");'><span class='fi-x'></span></button>";
                             }
                         },
                     ]

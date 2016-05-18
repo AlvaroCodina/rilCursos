@@ -18,10 +18,12 @@
 
     <div class="separacion-top"></div>
 
+    @include('datatables.listadoAlumnos')
+
     <div class="col-sm-8 col-sm-offset-2">
 
         <div class="page-header">
-            <h1> @if($alumno) <span class="glyphicon glyphicon-edit"></span> Editar {{ $alumno->name }} @else <span class="glyphicon glyphicon-share"></span> Nuevo Alumno @endif </h1>
+            <h1><span class="fi-torso"></span> @if($alumno)  Editar {{ $alumno->name }} @else  Nuevo Alumno @endif </h1>
         </div>
 
         <div>
@@ -46,7 +48,7 @@
 
             <div class="form-group">
                 {{ Form::label('telefono', 'Teléfono') }}
-                {{ Form::tel('telefono', \Illuminate\Support\Facades\Input::old('telefono'), array('class' => 'form-control', 'placeholder' => 'telefono')) }}
+                {{ Form::tel('telefono', \Illuminate\Support\Facades\Input::old('telefono'), array('class' => 'form-control', 'placeholder' => 'teléfono')) }}
                 @if ($errors->has('telefono')) <p class="help-block">{{ $errors->first('telefono') }}</p> @endif
             </div>
 
@@ -84,7 +86,7 @@
 
             {{ Form::close() }}
         </div>
-
+        <div class="vacio"></div>
     </div>
 
     <div id="myModal" class="modal fade" role="dialog">
@@ -105,10 +107,6 @@
 
         </div>
     </div>
-
-    @include('datatables.listadoAlumnos')
-
-    <div class="vacio"></div>
 
 @stop
 
@@ -135,19 +133,19 @@
                         {
                             data: "id",
                             "render": function (data) {
-                                return "<form action='/admin/cursosalumnos/" + data + "' method='GET'><button type='submit' class='btn btn-info'>Ver cursos</button></form>";
+                                return "<form action='/admin/cursosalumnos/" + data + "' method='GET'><button type='submit' class='btn btn-info'><span class='fi-list'></span> Ver cursos</button></form>";
                             }
                         },
                         {
                             data: "id",
                             "render": function (data) {
-                                return "<form action='/admin/alumnos/" + data + "/edit' method='PUT'><button type='submit' class='btn btn-warning'><span class='glyphicon glyphicon-edit'></span> Editar</button></form>";
+                                return "<form action='/admin/alumnos/" + data + "/edit' method='PUT'><button type='submit' class='btn btn-warning'><span class='fi-pencil'></span> Editar</button></form>";
                             }
                         },
                         {
                             data: "id",
                             "render": function (data) {
-                                return "<button class='btn btn-danger' data-toggle='modal' data-target='#myModal' onclick='modal(" + data + ");'><span class='glyphicon glyphicon-remove-sign'></span> Borrar</button>";
+                                return "<button class='btn btn-danger' data-toggle='modal' data-target='#myModal' onclick='modal(" + data + ");'><span class='fi-x'></span></button>";
                             }
                         },
                     ]

@@ -18,10 +18,12 @@
 
     <div class="separacion-top"></div>
 
+    @include('datatables.listadoProfesores')
+
     <div class="col-sm-8 col-sm-offset-2">
 
         <div class="page-header">
-            <h1> @if($profesor) <span class="glyphicon glyphicon-edit"></span> Editar {{ $profesor->nombre }} @else <span class="glyphicon glyphicon-share"></span> Nuevo Profesor @endif </h1>
+            <h1><span class="fi-torso-business"></span> @if($profesor) Editar {{ $profesor->nombre }} @else  Nuevo Profesor @endif </h1>
         </div>
 
         <div>
@@ -50,16 +52,6 @@
                 @if ($errors->has('email')) <p class="help-block">{{ $errors->first('email') }}</p> @endif
             </div>
 
-            <!--<div class="form-group">
-                { { Form::label('password', 'Contraseña') }}
-                if($profesor)
-                    { { Form::text('password', \Illuminate\Support\Facades\Input::old('password'), array('class' => 'form-control', 'placeholder' => 'contraseña', 'readonly' => 'false')) }}
-                else
-                    { { Form::text('password', \Illuminate\Support\Facades\Input::old('password'), array('class' => 'form-control', 'placeholder' => 'contraseña')) }}
-                endif
-                if ($errors->has('password')) <p class="help-block">{ { $errors->first('password') }}</p> endif
-            </div>-->
-
             <div class="form-group">
                 {{ Form::label('admin', 'Admin') }}
                 {{ Form::select('admin', array('0' => 'No', '1' => 'Si'), \Illuminate\Support\Facades\Input::old('admin'), array('class' => 'form-control')) }}
@@ -70,13 +62,8 @@
 
             {{ Form::close() }}
         </div>
-
+        <div class="vacio"></div>
     </div>
-
-
-    @include('datatables.listadoProfesores')
-
-    <div class="vacio"></div>
 
 @stop
 
@@ -102,13 +89,13 @@
                         {
                             data: "id",
                             "render": function (data) {
-                                return "<form action='/admin/profesores/" + data + "/edit' method='PUT'><button type='submit' class='btn btn-warning'><span class='glyphicon glyphicon-edit'></span> Editar</button></form>";
+                                return "<form action='/admin/profesores/" + data + "/edit' method='PUT'><button type='submit' class='btn btn-warning'><span class='fi-pencil'></span> Editar</button></form>";
                             }
                         },
                         {
                             data: "id",
                             "render": function (data) {
-                                return "<form method='POST' action='/admin/profesores/" + data + "'><input type='hidden' name='_token' value='{!! csrf_token() !!}'><input name='_method' type='hidden' value='DELETE'><button type='submit' class='btn btn-danger'><span class='glyphicon glyphicon-remove-sign'></span> Borrar</button></form>";
+                                return "<form method='POST' action='/admin/profesores/" + data + "'><input type='hidden' name='_token' value='{!! csrf_token() !!}'><input name='_method' type='hidden' value='DELETE'><button type='submit' class='btn btn-danger'><span class='fi-x'></span></button></form>";
                             }
                         },
                     ]

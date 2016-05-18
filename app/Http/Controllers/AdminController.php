@@ -43,6 +43,7 @@ class AdminController extends Controller
             'max' => 'El campo :attribute tiene que tener 100 caracteres máximo.',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
+
         if ($validator->fails()) {
             Input::flash();
             return view('auth.login-admin')->withInput(Input::all())->withErrors($validator);

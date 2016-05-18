@@ -28,6 +28,11 @@ class Cursos extends Model
         return $this->belongsToMany('App\User','users_cursos','cursos_id','users_id');
     }
 
+    public function listaesperacursos()
+    {
+        return $this->hasMany('App\ListaEspera');
+    }
+
     public function categorias()
     {
         return $this->belongsToMany('App\Categorias');

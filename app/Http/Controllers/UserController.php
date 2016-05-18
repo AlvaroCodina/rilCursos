@@ -65,7 +65,9 @@ class UserController extends Controller
     {
         $rules = array(
             'name' => 'required|min:3|max:100',
+            'apellidos' => 'required|min:3|max:100',
             'email' => 'required|min:3|max:100',
+            'telefono' => 'required|integer',
             'password' => 'required|min:3|max:100',
             'password_confirmation' => 'required|same:password',
         );
@@ -74,6 +76,7 @@ class UserController extends Controller
             'min' => 'El campo :attribute tiene que tener 3 caracteres mínimo.',
             'max' => 'El campo :attribute tiene que tener 100 caracteres máximo.',
             'same' => 'Las contraseñas tienen que coincidir.',
+            'integer' => 'El campo :attribute tiene que ser numérico.',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {

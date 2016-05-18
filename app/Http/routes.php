@@ -1,10 +1,6 @@
 <?php
 
 
-use App\Categorias;
-use App\Cursos;
-use Illuminate\Support\Facades\Mail;
-
 Route::get('/categorias/{slug}','CategoriasController@getCategoria')->where('slug', '[\s\S]+');
 Route::get('/cursos/{slug}','CursosController@getCurso')->where('slug', '[\s\S]+');
 Route::get('/inscribirse/{slug}','AlumnosCursosController@getInscribirse')->where('slug', '[\s\S]+');
@@ -58,23 +54,26 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 Route::group(['middleware' => 'admin'], function () {
+    Route::get('/admin/login', array('before' => 'auth:admin', 'uses' => 'AdminController@index'));
     Route::group(['middleware' => 'auth:admin'], function () {
         Route::get('/admin', 'AdminController@index');
+        Route::resource('/admin/cursos', 'AdminCursosController');
+        Route::resource('/admin/alumnos', 'AdminAlumnosController');
+        Route::resource('/admin/categorias', 'AdminCategoriasController');
+        Route::resource('/admin/profesores', 'AdminProfesoresController');
+        Route::resource('/admin/alumnoscursos', 'AdminAlumnosCursosController');
+        Route::resource('/admin/mails', 'AdminMailsController');
+        Route::get('/admin/cursosalumnos/{id}', 'AlumnosCursosController@getCursosAlumno')->where('id', '[0-9]+');
+        Route::any('/admin/cursosalumnos/{ids}', 'AlumnosCursosController@deleteCursosAlumno')->where('ids', '[\s\S]+');
+        Route::post('/alumnoscursos/textopago/{pago}/{ids}', 'AdminAlumnosCursosController@getTextoPago');
+        Route::any('/alumnoscursos/insertaralumno/{idCurso}/{idAlumno}', 'AdminAlumnosCursosController@insertAlumnoCurso');
+        Route::any('/verplantilla/{idPlantilla}/{id}', 'AdminMailsController@getTemplate');
+        Route::any('/admin/listaespera/{ids}', 'ListaEsperaController@quitarAlumno');
     });
     Route::get('/admin/login', 'AdminController@login');
     Route::post('/admin/login', 'AdminController@postLogin');
     Route::get('/admin/logout', 'AdminController@logout');
-    Route::resource('/admin/cursos', 'AdminCursosController');
-    Route::resource('/admin/alumnos', 'AdminAlumnosController');
-    Route::resource('/admin/categorias', 'AdminCategoriasController');
-    Route::resource('/admin/profesores', 'AdminProfesoresController');
-    Route::resource('/admin/alumnoscursos', 'AdminAlumnosCursosController');
-    Route::resource('/admin/mails', 'AdminMailsController');
-    Route::get('/admin/cursosalumnos/{id}', 'AlumnosCursosController@getCursosAlumno')->where('id', '[0-9]+');
-    Route::any('/admin/cursosalumnos/{ids}', 'AlumnosCursosController@deleteCursosAlumno')->where('ids', '[\s\S]+');
-    Route::post('/alumnoscursos/textopago/{pago}/{ids}', 'AdminAlumnosCursosController@getTextoPago');
-    Route::any('/alumnoscursos/insertaralumno/{idCurso}/{idAlumno}', 'AdminAlumnosCursosController@insertAlumnoCurso');
-    Route::any('/verplantilla/{idPlantilla}/{id}', 'AdminMailsController@getTemplate');
+
 
 
 });

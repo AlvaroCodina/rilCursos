@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\AlumnosCursos;
 use App\Cursos;
+use App\ListaEspera;
 use App\Plantillas;
 use App\User;
 use App\UsersCursos;
@@ -23,9 +24,17 @@ class AdminAlumnosCursosController extends Controller
     }
 
     public function insertAlumnoCurso($idCurso, $idAlumno){
-        DB::table('users_cursos')->insert(
-            array('cursos_id' => $idCurso, 'users_id' => $idAlumno, 'pago' => 0)
-        );
+        $contAlumno = UsersCursos::where('cursos_id', $idCurso)->count();
+        $curso = Cursos::find($idCurso);
+        if($contAlumno >= $curso->max){
+            DB::table('lista_espera')->insert(
+                array('cursos_id' => $idCurso, 'users_id' => $idAlumno, 'pago' => 0)
+            );
+        }else{
+            DB::table('users_cursos')->insert(
+                array('cursos_id' => $idCurso, 'users_id' => $idAlumno, 'pago' => 0)
+            );
+        }
         return redirect('/admin/alumnoscursos/' . $idCurso);
     }
 
@@ -77,16 +86,16 @@ class AdminAlumnosCursosController extends Controller
         $dts = [];
 
         foreach($lista as $user){
-            array_push($dts, array('id' => $user->id, 'name' => $user->name, 'apellidos' => $user->apellidos, 'email' => $user->email, 'telefono' => $user->telefono, 'pago' => $this->getPago($curso->id, $user->id), 'ids' => $id."|".$user->id));
+            array_push($dts, array('id' => $user->id, 'name' => $user->name, 'apellidos' => $user->apellidos, 'email' => $user->email, 'telefono' => $user->telefono, 'pago' => $this->getPago($curso->id, $user->id), 'ids' => $id."|".$user->id."|0"));
         }
 
-        /*$listaEspera = Cursos::find($id)->listaesperacursos()->get();
+        $listaEspera = ListaEspera::where('cursos_id', $id)->get();
         $espera = array();
-        foreach($listaEspera as $dts){
-            $espera[] = User::find($dts->alumnos_id);
-        }*/
+        foreach($listaEspera as $listesp){
+            $espera[] = User::find($listesp->users_id);
+        }
 
-        return view('admin.listado')->with('lista', $dts)->with('curso', $curso)->with('numAlumnos', $datos)->with('alumnos', $alumnos)->with('plantillas', $plantillas);     //->with('espera', $espera)
+        return view('admin.listado')->with('lista', $dts)->with('curso', $curso)->with('numAlumnos', $datos)->with('alumnos', $alumnos)->with('plantillas', $plantillas)->with('espera', $espera);
 
     }
 

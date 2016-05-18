@@ -9,9 +9,13 @@
 
 @section('pagina')
 
-    <div class="vacio"></div>
+    <div class="separacion-top"></div>
 
     <div class="col-sm-8 col-sm-offset-2">
+
+        <div class="page-header">
+            <h1><span class="fi-mail"></span> Mails</h1>
+        </div>
 
         <form action="/admin/mails" method="post">
 

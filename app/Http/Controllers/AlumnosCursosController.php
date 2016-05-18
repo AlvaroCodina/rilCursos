@@ -35,10 +35,18 @@ class AlumnosCursosController extends Controller
         $curso = Cursos::where('slug', $slug)->get();
         $categoria = Categorias::find($curso[0]->idCategoria);
         if(Cursos::terminado($curso[0]) >= 0){
-            DB::table('users_cursos')->insert(
-                array('cursos_id' => $curso[0]->id, 'users_id' => Auth::user()->id, 'pago' => 0)
-            );
-            return view("pagar")->with("curso", $curso[0])->with("categoria", $categoria);
+            $contAlumno = UsersCursos::where('cursos_id', $curso[0]->id)->count();
+            if($contAlumno >= $curso[0]->max){
+                DB::table('lista_espera')->insert(
+                    array('cursos_id' => $curso[0]->id, 'users_id' => Auth::user()->id, 'pago' => 0)
+                );
+                return $this->getInscribirse($curso[0]->slug, 'Estas en la lista de espera');
+            }else{
+                DB::table('users_cursos')->insert(
+                    array('cursos_id' => $curso[0]->id, 'users_id' => Auth::user()->id, 'pago' => 0)
+                );
+                return view("pagar")->with("curso", $curso[0])->with("categoria", $categoria);
+            }
         }
         else{
             return $this->getInscribirse($curso[0]->slug, 'Este curso ya pasó');

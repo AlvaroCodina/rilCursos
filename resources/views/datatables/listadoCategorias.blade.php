@@ -1,7 +1,7 @@
 <div class="col-sm-8 col-sm-offset-2">
 
     <div class="page-header">
-        <h1><span class="glyphicon glyphicon-th-list"></span> Listado de Categorias</h1>
+        <h1><span class="fi-list"></span> Listado de Categorías</h1>
     </div>
 
 </div>
@@ -11,8 +11,8 @@
         <tr>
             <th>Nombre</th>
             <th>Descripción</th>
-            <th>color</th>
-            <th>slug</th>
+            <th>Color</th>
+            <th>Slug</th>
             <th>Editar</th>
             <th>Borrar</th>
         </tr>

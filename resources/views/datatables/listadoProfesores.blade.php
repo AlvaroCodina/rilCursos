@@ -1,7 +1,7 @@
 <div class="col-sm-8 col-sm-offset-2">
 
     <div class="page-header">
-        <h1><span class="glyphicon glyphicon-th-list"></span> Listado de Profesores</h1>
+        <h1><span class="fi-torsos-all"></span> Listado de Profesores</h1>
     </div>
 
 </div>
@@ -11,7 +11,7 @@
         <tr>
             <th>Nombre</th>
             <th>Apellidos</th>
-            <th>email</th>
+            <th>Email</th>
             <th>Admin</th>
             <th>Editar</th>
             <th>Borrar</th>

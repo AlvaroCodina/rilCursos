@@ -31,7 +31,7 @@ class CursosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index()     //poner por defecto $tipo = null y si se le pasa por parametro otro valor que tenga ese
     {
         $ultimosCursos = DB::table('cursos')
             ->join('categorias', 'cursos.idCategoria', '=', 'categorias.id')
