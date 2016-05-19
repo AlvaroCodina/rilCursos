@@ -9,7 +9,7 @@ class UsersCursos extends Model
 {
     protected $table = 'users_cursos';
 
-    protected $fillable = array('users_id', 'cursos_id', 'pago');
+    protected $fillable = array('users_id', 'cursos_id', 'senal', 'resto', 'regalo', 'observaciones');
 
     public function cursos()
     {

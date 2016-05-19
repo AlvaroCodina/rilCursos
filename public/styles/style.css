@@ -127,9 +127,13 @@
     display: inline !important;
 }
 
+#nuevo{
+    display: none;
+}
 
-
-
+#marcar{
+    float: right;
+}
 
 
 

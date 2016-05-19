@@ -79,6 +79,7 @@
         <label for="contenidoHtml">Contenido</label>
         <textarea name="contenidoHtml" class="form-control" id="contenidoHtml" rows="4" cols="50" placeholder="Para poner contenido HTML al curso">{{ $curso->contenidoHtml }}</textarea>
     </div>
-
-    <button type="submit" class="btn btn-primary">Enviar</button>
+    <div class="col-md-12">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </div>
 </form>

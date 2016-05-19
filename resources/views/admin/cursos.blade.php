@@ -18,13 +18,15 @@
 
     <div class="separacion-top"></div>
 
-    @include('datatables.listadoCursos')
-
     <div class="col-sm-8 col-sm-offset-2">
-
         <div class="page-header">
-            <h1> @if($curso) <span class="fi-pencil"></span> Editar {{ $curso->categoria }} @else <span class="fi-plus"></span> Nuevo Curso @endif </h1>
+            <h1><span id="icono"></span> <span id="titulo"></span> &nbsp; <button class="btn btn-primary" id="btn-accion">Nuevo curso</button></h1>
         </div>
+    </div>
+    <div class="col-sm-12" id="lista">
+        @include('datatables.listadoCursos')
+    </div>
+    <div class="col-sm-8 col-sm-offset-2" id="nuevo">
 
         <div>
             @if($curso)
@@ -66,6 +68,69 @@
 
     <script>
         $(document).ready(function(){
+
+            if("{{ $fallo }}" == "si"){
+                nuevo();
+            }
+            if("{{ $fallo }}" == "sisi"){
+                editar();
+            }
+            if("{{ $curso }}" != ""){
+                editar();
+            }
+
+
+
+            $("#titulo").text("Listado de Cursos");
+            $("#icono").addClass("fi-list");
+
+            $("#btn-accion").click(function(){
+                if($(this).text() == "Nuevo curso"){
+                    nuevo();
+                }
+                else{
+                    if($(this).text() == "Listado de cursos"){
+                        window.location.replace("/admin/cursos");
+                    }
+                }
+            });
+
+            function editar(){
+                $("#btn-accion").text("Listado de cursos");
+                $("#nuevo").show();
+                $("#lista").hide();
+                $("#titulo").text("Editar curso");
+                $("#icono").removeClass("fi-plus fi-list");
+                $("#icono").addClass("fi-pencil");
+            }
+
+            function nuevo(){
+                limpiar();
+                $("#btn-accion").text("Listado de cursos");
+                $("#nuevo").show();
+                $("#lista").hide();
+                $("#titulo").text("Nuevo curso");
+                $("#icono").removeClass("fi-list fi-pencil");
+                $("#icono").addClass("fi-plus");
+            }
+
+            function limpiar(){
+                $("#idCategoria").val("1");
+                $("#idProfesor").val("1");
+                $("#slug").val("");
+                $("#numMax").val("");
+                $("#numMin").val("");
+                $("#fechaInicio").val("");
+                $("#precios").val("");
+                $("#foto").val("");
+                $("#duracion").val("");
+                $("#lugar").val("");
+                $("#horario").val("");
+                $("#resumen").val("");
+                $("#descripcion").val("");
+                $("#contenidoHTML").val("");
+            }
+
             $("#itemtres").addClass("active");
 
             $(function() {
@@ -84,13 +149,19 @@
                         {
                             data: "id",
                             "render": function (data) {
-                                return "<form action='/admin/alumnoscursos/" + data + "' method='GET'><button type='submit' class='btn btn-info'><span class='fi-list'></span> Ver alumnos</button></form>";
+                                return "<form action='/admin/alumnoscursos/" + data + "' method='GET'><button type='submit' class='btn btn-default'><span class='fi-list'></span> Ver alumnos</button></form>";
                             }
                         },
                         {
                             data: "id",
                             "render": function (data) {
-                                return "<form method='GET' action='/admin/cursos/" + data + "/edit'><button type='submit' class='btn btn-warning'><span class='fi-pencil'></span> Editar</button></form>";
+                                return "<form action='/admin/listainteresados/" + data + "' method='GET'><button type='submit' class='btn btn-info'><span class='fi-list'></span> Ver interesados</button></form>";
+                            }
+                        },
+                        {
+                            data: "id",
+                            "render": function (data) {
+                                return "<form method='GET' action='/admin/cursos/" + data + "/edit'><button type='submit' class='btn btn-warning editar'><span class='fi-pencil'></span> Editar</button></form>";
                             }
                         },
                         {

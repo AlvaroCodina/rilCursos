@@ -81,6 +81,7 @@
             <label for="contenidoHtml">Contenido</label>
             <textarea name="contenidoHtml" class="form-control" id="contenidoHtml" rows="4" cols="50" value="{{ \Illuminate\Support\Facades\Input::old('contenidoHtml') }}" placeholder="Para poner contenido HTML al curso"></textarea>
         </div>
-
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
 </form>

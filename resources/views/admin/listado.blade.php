@@ -15,8 +15,8 @@
 <div class="col-sm-8 col-sm-offset-2">
 
     <div class="page-header">
-        <h1><span class="glyphicon glyphicon-th-list"></span> Alumnos del Curso: {{ $curso->resumen }}<small> {{ $curso->fechaInicio }}</small></h1>
-        <h3>Número mínimo: {{ $curso->numMin }}, Número máximo: {{ $curso->numMax }}</h3>
+        <h1><span class="fi-list"></span> Alumnos del Curso: {{ $curso->resumen }}<small> {{ $curso->fechaInicio }}</small></h1>
+        <h3>Número mínimo: {{ $curso->numMin }}, Número máximo: {{ $curso->numMax }}, cuesta: {{ $curso->precios }}</h3>
 
         <input type="hidden" id="idCurso" name="idCurso" value="{{ $curso->id }}">
 
@@ -30,36 +30,71 @@
 
         <button class="btn btn-info" id="enviar">Enviar <span class="fi-mail"></span></button>
     </div>
-
-    <div>
+</div>
+<div class="col-sm-12">
+    <div class="table-responsive">
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Apellidos</th>
-                <th>Email</th>
-                <th>Teléfono</th>
-                <th>Pagó</th>
+                <th>Nombre y apellidos</th>
+                <th>Contacto</th>
+                <th style="min-width: 150px;">Señal</th>
+                <th style="min-width: 150px;">Resto</th>
+                <th>Regalo</th>
+                <th style="min-width: 300px;">Observaciones</th>
                 <th>Quitar</th>
-                <th>Seleccionar</th>
+                <th>-</th>
             </tr>
             </thead>
             <tbody>
 
             @foreach ($lista as $user)
                 <tr>
-                    <td>{{ $user['name'] }}</td>
-                    <td>{{ $user['apellidos'] }}</td>
-                    <td>{{ $user['email'] }}</td>
-                    <td>{{ $user['telefono'] }}</td>
+                    <td>{{ $user['name'] ." ". $user['apellidos'] }}</td>
                     <td>
-                        <form action="/alumnoscursos/textopago/{{ $user['pago'] }}/{{ $user['ids'] }}" method="post">
+                        <button onclick="contacto('{{ $user['email'] . "|" . $user['telefono'] }}');" class="btn btn-info contacto"><span class="fi-plus"> Info</span></button>
+                    </td>
+                    <td>
+                        <form method="post" action="/anadir/senal/{{ $user['ids'] }}">
                             <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                            @if($user['pago']==0)
-                                <button type="submit" class="btn btn-warning">No pagó</button>
+                            <div class="col-xs-6" style="width: 80px;">
+                                <input type="text" class="form-control" name="senal" value="{{ $user['senal'] }}">
+                            </div>
+                            <div class="col-xs-2">
+                                <button type="submit" class="btn btn-primary"><span class="fi-plus"></span></button>
+                            </div>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="/anadir/resto/{{ $user['ids'] }}">
+                            <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                            <div class="col-xs-6" style="width: 80px;">
+                                <input type="text" class="form-control" name="resto" value="{{ $user['resto'] }}">
+                            </div>
+                            <div class="col-xs-2">
+                                <button type="submit" class="btn btn-primary"><span class="fi-plus"></span></button>
+                            </div>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/alumnoscursos/textoregalo/{{ $user['regalo'] }}/{{ $user['ids'] }}" method="post">
+                            <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                            @if($user['regalo']==0)
+                                <button type="submit" class="btn btn-warning">No</button>
                             @else
-                                <button type="submit" class="btn btn-success">Si pagó</button>
+                                <button type="submit" class="btn btn-success">Si</button>
                             @endif
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="/anadir/observaciones/{{ $user['ids'] }}">
+                            <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" name="observaciones" value="{{ $user['observaciones'] }}">
+                            </div>
+                            <div class="col-xs-2">
+                                <button type="submit" class="btn btn-primary"><span class="fi-plus"></span></button>
+                            </div>
                         </form>
                     </td>
                     <td>
@@ -77,15 +112,19 @@
                 <td>-</td>
                 <td>-</td>
                 <td>-</td>
+                <td>-</td>
             </tr>
 
             @for($i=0;$i< count($espera); $i++)
                 <tr>
-                    <td>{{ $espera[$i]->name }}</td>
-                    <td>{{ $espera[$i]->apellidos }}</td>
-                    <td>{{ $espera[$i]->email }}</td>
-                    <td>{{ $espera[$i]->telefono }}</td>
-                    <td>-</td>
+                    <td>{{ $espera[$i]->name . " " . $espera[$i]->apellidos }}</td>
+                    <td>
+                        <!--<button onclick="contacto('{ { $user['email'] . "|" . $user['telefono'] }}');" class="btn btn-info contacto"><span class="fi-plus"> Info</span></button>-->
+                    </td>
+                    <td>{{ $espera[$i]->senal }}</td>
+                    <td>{{ $espera[$i]->resto }}</td>
+                    <td>{{ $espera[$i]->regalo }}</td>
+                    <td>{{ $espera[$i]->observaciones }}</td>
                     <td>
                         <button class='btn btn-danger' data-toggle='modal' data-target='#quitarAlumno' onclick='modal("{{ $curso->id."|".$espera[$i]->id."|1" }}");'><span class='fi-x'></span></button>
                     </td>
@@ -96,8 +135,10 @@
             </tbody>
         </table>
     </div>
-
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Añadir Alumno</button>
+    <button type="button" class="btn btn-primary" id="marcar">Marcar / Desmarcar</button>
+</div>
+
 
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -113,6 +154,26 @@
                         <a href="/alumnoscursos/insertaralumno/{{ $curso->id }}/{{ $alumno->id }}"><li class="list-group-item">{{ $alumno->name . ' ' . $alumno->apellidos . ' | ' . $alumno->email}}</li></a>
                     @endforeach
                     </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="contacto" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Datos de contacto</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Email: <a id="mailto"><span id="email"></span></a></p>
+                    <p>Teléfono: <a id="tel"><span id="telefono"></span></a></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -141,7 +202,6 @@
         </div>
     </div>
 
-</div>
 
 @stop
 
@@ -151,6 +211,8 @@
     <script>
 
         var arrayEmails = "";
+        var email = "";
+        var telefono = "";
 
         function check(chk){
             arrayEmails = arrayEmails.replace($(chk).val() + "|", "");
@@ -160,9 +222,31 @@
             }
         }
 
+        function contacto(datos){
+            var arr = datos.split("|");
+            email = arr[0];
+            telefono = arr[1];
+        }
+
         $(document).ready(function(){
 
+            $("#marcar").click(function(){
+                if($(".chk").is(":checked")){
+                    $(".chk").prop( "checked", false );
+                }
+                else{
+                    $(".chk").prop( "checked", true );
+                }
 
+            });
+
+            $(".contacto").click(function(){
+                $("#email").text(email);
+                $("#telefono").text(telefono);
+                $("#mailto").attr("href", "mailto:" + email)
+                $("#tel").attr("href", "tel:+" + telefono)
+                $('#contacto').modal('show');
+            });
 
             $('#enviar').click(function(){
 

@@ -19,7 +19,7 @@ class AdminCursosController extends Controller
     function devolver(){
         $categorias = Categorias::all();
         $profesores = Profesores::all();
-        return view('admin.cursos')->with('curso', false)->with('categorias', $categorias)->with('profesores', $profesores);
+        return view('admin.cursos')->with('curso', false)->with('categorias', $categorias)->with('profesores', $profesores)->with('fallo', 'no');
     }
 
     /**
@@ -80,7 +80,7 @@ class AdminCursosController extends Controller
             Input::flash();
             $categorias = Categorias::all();
             $profesores = Profesores::all();
-            return view('admin.cursos')->with('curso', false)->with('categorias', $categorias)->with('profesores', $profesores)->withInput(Input::all())->withErrors($validator);
+            return view('admin.cursos')->with('curso', false)->with('categorias', $categorias)->with('profesores', $profesores)->withInput(Input::all())->withErrors($validator)->with('fallo', 'si');
 
         } else {
 
@@ -119,7 +119,7 @@ class AdminCursosController extends Controller
         $curso = Cursos::find($id);
         $categorias = Categorias::all();
         $profesores = Profesores::all();
-        return view('admin.cursos')->with('curso', $curso)->with('categorias', $categorias)->with('profesores', $profesores);
+        return view('admin.cursos')->with('curso', $curso)->with('categorias', $categorias)->with('profesores', $profesores)->with('fallo', 'no');
     }
 
     /**
@@ -158,7 +158,7 @@ class AdminCursosController extends Controller
             $categorias = Categorias::all();
             $profesores = Profesores::all();
             Input::flash();
-            return view('admin.cursos')->with('curso', false)->with('categorias', $categorias)->with('profesores', $profesores)->withInput(Input::all())->withErrors($validator);
+            return view('admin.cursos')->with('curso', false)->with('categorias', $categorias)->with('profesores', $profesores)->withInput(Input::all())->withErrors($validator)->with('fallo', 'sisi');
         } else {
             $curso = Cursos::find($id);
             $curso->idCategoria = Input::get('idCategoria');
