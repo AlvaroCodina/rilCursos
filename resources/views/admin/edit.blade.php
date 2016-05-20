@@ -4,7 +4,6 @@
 <form action="/admin/cursos/{{ $curso->id }}" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
     <input name="_method" type="hidden" value="PUT">
-
     <div class="form-group col-md-4">
         <label for="idCategoria">Categoría</label>
         <select name="idCategoria" id="idCategoria" class="form-control">

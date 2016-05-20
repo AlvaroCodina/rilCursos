@@ -12,26 +12,33 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 class AdminAlumnosCursosController extends Controller
 {
 
-    public function anadirSenal(Request $request, $ids){
+    public function anadirSenal(){
+        $senal = Input::get( 'senal' );
+        $ids = Input::get( 'ids' );
         $dts = explode("|", $ids);
-        DB::table('users_cursos')->where('cursos_id', $dts[0])->where('users_id', $dts[1])->update(array('senal' => $request->senal));
-        return redirect('/admin/alumnoscursos/' . $dts[0]);
+        DB::table('users_cursos')->where('cursos_id', $dts[1])->where('users_id', $dts[2])->update(array('senal' => $senal));
+        return redirect('/admin/alumnoscursos/' . $dts[1]);
     }
 
-    public function anadirResto(Request $request, $ids){
+    public function anadirResto(){
+        $resto = Input::get( 'resto' );
+        $ids = Input::get( 'ids' );
         $dts = explode("|", $ids);
-        DB::table('users_cursos')->where('cursos_id', $dts[0])->where('users_id', $dts[1])->update(array('resto' => $request->resto));
-        return redirect('/admin/alumnoscursos/' . $dts[0]);
+        DB::table('users_cursos')->where('cursos_id', $dts[1])->where('users_id', $dts[2])->update(array('resto' => $resto));
+        return redirect('/admin/alumnoscursos/' . $dts[1]);
     }
 
-    public function anadirObservaciones(Request $request, $ids){
+    public function anadirObservaciones(){
+        $observaciones = Input::get( 'observaciones' );
+        $ids = Input::get( 'ids' );
         $dts = explode("|", $ids);
-        DB::table('users_cursos')->where('cursos_id', $dts[0])->where('users_id', $dts[1])->update(array('observaciones' => $request->observaciones));
-        return redirect('/admin/alumnoscursos/' . $dts[0]);
+        DB::table('users_cursos')->where('cursos_id', $dts[1])->where('users_id', $dts[2])->update(array('observaciones' => $observaciones));
+        return redirect('/admin/alumnoscursos/' . $dts[1]);
     }
 
     public function getTextoRegalo($regalo, $ids){
@@ -41,17 +48,21 @@ class AdminAlumnosCursosController extends Controller
         return redirect('/admin/alumnoscursos/' . $dts[0]);
     }
 
-    public function insertAlumnoCurso($idCurso, $idAlumno){
-        $contAlumno = UsersCursos::where('cursos_id', $idCurso)->count();
-        $curso = Cursos::find($idCurso);
-        if($contAlumno >= $curso->max){
-            DB::table('lista_espera')->insert(
-                array('cursos_id' => $idCurso, 'users_id' => $idAlumno, 'regalo' => 0)
-            );
-        }else{
-            DB::table('users_cursos')->insert(
-                array('cursos_id' => $idCurso, 'users_id' => $idAlumno, 'regalo' => 0)
-            );
+    public static function insertAlumnoCurso($idCurso, $idAlumno){
+        $datos = DB::table('users_cursos')->where('cursos_id', $idCurso)->where('users_id', $idAlumno)->get();
+        $datos2 = DB::table('lista_espera')->where('cursos_id', $idCurso)->where('users_id', $idAlumno)->get();
+        if($datos == null && $datos2 == null){
+            $contAlumno = UsersCursos::where('cursos_id', $idCurso)->count();
+            $curso = Cursos::find($idCurso);
+            if($contAlumno >= $curso->max){
+                DB::table('lista_espera')->insert(
+                    array('cursos_id' => $idCurso, 'users_id' => $idAlumno, 'regalo' => 0)
+                );
+            }else{
+                DB::table('users_cursos')->insert(
+                    array('cursos_id' => $idCurso, 'users_id' => $idAlumno, 'regalo' => 0)
+                );
+            }
         }
         return redirect('/admin/alumnoscursos/' . $idCurso);
     }

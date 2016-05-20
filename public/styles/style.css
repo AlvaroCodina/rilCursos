@@ -123,7 +123,7 @@
 
 .acabado{ opacity: 0.7; }
 
-.cke_button__shortcode1 .cke_button_label, .cke_button__shortcode2 .cke_button_label {
+.cke_button__shortcode1 .cke_button_label, .cke_button__shortcode2 .cke_button_label, .cke_button__shortcode3 .cke_button_label, .cke_button__shortcode4 .cke_button_label, .cke_button__shortcode5 .cke_button_label, .cke_button__shortcode6 .cke_button_label, .cke_button__shortcode7 .cke_button_label {
     display: inline !important;
 }
 

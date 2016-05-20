@@ -1,7 +1,5 @@
 
 
-
-
     <form action="/admin/cursos" method="post" enctype="multipart/form-data">
 
 
@@ -69,17 +67,17 @@
         </div>
         <div class="form-group col-md-12">
             <label for="resumen">Resumen</label>
-            <textarea name="resumen" class="form-control" id="resumen" rows="4" cols="50" value="{{ \Illuminate\Support\Facades\Input::old('resumen') }}" placeholder="Un resumen del curso"></textarea>
+            <textarea name="resumen" class="form-control" id="resumen" rows="4" cols="50" placeholder="Un resumen del curso">{{ \Illuminate\Support\Facades\Input::old('resumen') }}</textarea>
             @if ($errors->has('resumen')) <p class="help-block">{{ $errors->first('resumen') }}</p> @endif
         </div>
         <div class="form-group col-md-12">
             <label for="descripcion">Descripción</label>
-            <textarea name="descripcion" class="form-control" id="descripcion" rows="4" cols="50" value="{{ \Illuminate\Support\Facades\Input::old('descripcion') }}" placeholder="Una descripción del curso"></textarea>
+            <textarea name="descripcion" class="form-control" id="descripcion" rows="4" cols="50" placeholder="Una descripción del curso">{{ \Illuminate\Support\Facades\Input::old('descripcion') }}</textarea>
             @if ($errors->has('descripcion')) <p class="help-block">{{ $errors->first('descripcion') }}</p> @endif
         </div>
         <div class="form-group col-md-12">
             <label for="contenidoHtml">Contenido</label>
-            <textarea name="contenidoHtml" class="form-control" id="contenidoHtml" rows="4" cols="50" value="{{ \Illuminate\Support\Facades\Input::old('contenidoHtml') }}" placeholder="Para poner contenido HTML al curso"></textarea>
+            <textarea name="contenidoHtml" class="form-control" id="contenidoHtml" rows="4" cols="50"  placeholder="Para poner contenido HTML al curso">{{ \Illuminate\Support\Facades\Input::old('contenidoHtml') }}</textarea>
         </div>
         <div class="col-md-12">
             <button type="submit" class="btn btn-primary">Enviar</button>

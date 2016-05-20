@@ -105,30 +105,13 @@
             }
 
             function nuevo(){
-                limpiar();
+
                 $("#btn-accion").text("Listado de cursos");
                 $("#nuevo").show();
                 $("#lista").hide();
                 $("#titulo").text("Nuevo curso");
                 $("#icono").removeClass("fi-list fi-pencil");
                 $("#icono").addClass("fi-plus");
-            }
-
-            function limpiar(){
-                $("#idCategoria").val("1");
-                $("#idProfesor").val("1");
-                $("#slug").val("");
-                $("#numMax").val("");
-                $("#numMin").val("");
-                $("#fechaInicio").val("");
-                $("#precios").val("");
-                $("#foto").val("");
-                $("#duracion").val("");
-                $("#lugar").val("");
-                $("#horario").val("");
-                $("#resumen").val("");
-                $("#descripcion").val("");
-                $("#contenidoHTML").val("");
             }
 
             $("#itemtres").addClass("active");
@@ -167,7 +150,7 @@
                         {
                             data: "id",
                             "render": function (data) {
-                                return "<button class='btn btn-danger' data-toggle='modal' data-target='#myModal' onclick='modal(" + data + ");'><span class='fi-x'></span></button>";
+                                return "<button class='btn btn-default' data-toggle='modal' data-target='#myModal' onclick='modal(" + data + ");'><span class='fi-x'></span></button>";
                             }
                         },
                     ]

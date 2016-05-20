@@ -67,16 +67,17 @@ Route::group(['middleware' => 'admin'], function () {
         Route::any('/admin/cursosalumnos/{ids}', 'AlumnosCursosController@deleteCursosAlumno')->where('ids', '[\s\S]+');
         Route::post('/alumnoscursos/textoregalo/{regalo}/{ids}', 'AdminAlumnosCursosController@getTextoRegalo');
         Route::any('/alumnoscursos/insertaralumno/{idCurso}/{idAlumno}', 'AdminAlumnosCursosController@insertAlumnoCurso');
-        Route::any('/anadir/senal/{ids}', 'AdminAlumnosCursosController@anadirSenal');
-        Route::any('/anadir/resto/{ids}', 'AdminAlumnosCursosController@anadirResto');
-        Route::any('/anadir/observaciones/{ids}', 'AdminAlumnosCursosController@anadirObservaciones');
+        Route::any('/anadir/senal', 'AdminAlumnosCursosController@anadirSenal');
+        Route::any('/anadir/resto', 'AdminAlumnosCursosController@anadirResto');
+        Route::any('/anadir/observaciones', 'AdminAlumnosCursosController@anadirObservaciones');
         Route::any('/verplantilla/{idPlantilla}/{id}', 'AdminMailsController@getTemplate');
         Route::any('/admin/listaespera/{ids}', 'ListaEsperaController@quitarAlumno');
         Route::any('/admin/listainteresados/{id}', 'ListaInteresadosController@show');
         Route::any('/listaInteresados/insertaralumno/{idCurso}/{idAlumno}', 'ListaInteresadosController@insertarAlumno');
         Route::any('/listaInteresados/quitar/{ids}', 'ListaInteresadosController@quitarAlumno');
         Route::any('/listaInteresados/puede/{puede}/{ids}', 'ListaInteresadosController@getPuede');
-        Route::get('/listaInteresados/mails/{idCurso}', 'AdminMailsController@sendMailsInteresados');
+        Route::any('/listaInteresados/mails', 'AdminMailsController@sendMailsInteresados');
+        Route::get('/listaInteresados/pasar/{idCurso}', 'ListaInteresadosController@pasarAlumnos');
     });
     Route::get('/admin/login', 'AdminController@login');
     Route::post('/admin/login', 'AdminController@postLogin');
@@ -92,6 +93,10 @@ Route::group(['middleware' => 'admin'], function () {
 Route::post('/alumnoscursos/emails', 'AdminMailsController@sendMails');
 
 
+/* PRUEBAS */
+
+Route::get('/prueba', 'HomeController@prueba');
+Route::any('/prueba/datos', 'HomeController@datos');
 
 
 

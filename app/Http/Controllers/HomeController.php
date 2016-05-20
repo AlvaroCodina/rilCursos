@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -26,4 +27,18 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function prueba(){
+        return view('admin.pruebaform');
+    }
+
+    public function datos(Request $request){
+        // will output all our request and die
+        dd($request->senal);
+        //dd($request->nombre . " - " . $request->ids);
+
+
+        //DB::table('users')->where('id', 1)->update(array('name' => $name));
+    }
+
 }

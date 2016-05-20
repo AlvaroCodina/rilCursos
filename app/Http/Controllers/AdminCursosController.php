@@ -157,8 +157,9 @@ class AdminCursosController extends Controller
         if ($validator->fails()) {
             $categorias = Categorias::all();
             $profesores = Profesores::all();
+            $cur = Cursos::find($id);
             Input::flash();
-            return view('admin.cursos')->with('curso', false)->with('categorias', $categorias)->with('profesores', $profesores)->withInput(Input::all())->withErrors($validator)->with('fallo', 'sisi');
+            return view('admin.cursos')->with('curso', $cur)->with('categorias', $categorias)->with('profesores', $profesores)->withInput(Input::all())->withErrors($validator)->with('fallo', 'sisi');
         } else {
             $curso = Cursos::find($id);
             $curso->idCategoria = Input::get('idCategoria');

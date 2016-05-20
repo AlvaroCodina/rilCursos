@@ -95,7 +95,7 @@
                         {
                             data: "id",
                             "render": function (data) {
-                                return "<form method='POST' action='/admin/profesores/" + data + "'><input type='hidden' name='_token' value='{!! csrf_token() !!}'><input name='_method' type='hidden' value='DELETE'><button type='submit' class='btn btn-danger'><span class='fi-x'></span></button></form>";
+                                return "<form method='POST' action='/admin/profesores/" + data + "'><input type='hidden' name='_token' value='{!! csrf_token() !!}'><input name='_method' type='hidden' value='DELETE'><button type='submit' class='btn btn-default'><span class='fi-x'></span></button></form>";
                             }
                         },
                     ]

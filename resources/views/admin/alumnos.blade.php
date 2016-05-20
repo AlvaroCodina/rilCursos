@@ -145,7 +145,7 @@
                         {
                             data: "id",
                             "render": function (data) {
-                                return "<button class='btn btn-danger' data-toggle='modal' data-target='#myModal' onclick='modal(" + data + ");'><span class='fi-x'></span></button>";
+                                return "<button class='btn btn-default' data-toggle='modal' data-target='#myModal' onclick='modal(" + data + ");'><span class='fi-x'></span></button>";
                             }
                         },
                     ]

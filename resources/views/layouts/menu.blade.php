@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" >
 @section('header')
 
     {!! Html::style('bootstrap/css/bootstrap.min.css') !!}
@@ -39,10 +40,9 @@
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li id="itemdos"><a href="/admin/categorias">Categorias</a></li>
+                    <li id="itemdos"><a href="/admin/categorias">Categorías</a></li>
                     <li id="itemcinco"><a href="/admin/profesores">Profesores</a></li>
                     <li id="itemseis"><a href="/admin/mails">Mails</a></li>
-                    <!--<li>{ { auth()->guard('admin')->user()->name }} <span class="caret"></span></li>-->
                     <li id="logout"><a href="/admin/logout"><span class="glyphicon glyphicon-log-out"></span> Cerrar Sesión</a></li>
                 </ul>
             </div>

@@ -43,7 +43,7 @@
                         <td>
                             <form method="post" action="/admin/cursosalumnos/{{ $alumno->id . '|' . $curso->id }}">
                                 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                                <button type="submit" class="btn btn-danger"><span class="fi-x"></span></button>
+                                <button type="submit" class="btn btn-default"><span class="fi-x"></span></button>
                             </form>
                         </td>
                     </tr>
