@@ -16,7 +16,7 @@
 <div class="col-sm-8 col-sm-offset-2">
 
     <div class="page-header">
-        <h1><span class="fi-list"></span> Alumnos del Curso: {{ $curso->resumen }}<small> {{ $curso->fechaInicio }}</small> <a href="/admin/listainteresados/{{ $curso->id }}" class="btn btn-primary">Ir a interesados</a></h1>
+        <h1><span class="fi-list"></span> Alumnos del Curso: <small>{{ $curso->resumen . " " . $curso->fechaInicio }}</small> <a href="/admin/listainteresados/{{ $curso->id }}" class="btn btn-primary">Ir a interesados</a></h1>
         <h3>Número mínimo: {{ $curso->numMin }}, Número máximo: {{ $curso->numMax }}, cuesta: {{ $curso->precios }}</h3>
 
         <input type="hidden" id="idCurso" name="idCurso" value="{{ $curso->id }}">
@@ -32,35 +32,43 @@
         <button class="btn btn-info" id="enviar">Enviar <span class="fi-mail"></span></button>
     </div>
 </div>
-<div class="col-sm-12">
+<div class="col-sm-8 col-sm-offset-2">
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>Nombre y apellidos</th>
                 <th>Contacto</th>
-                <th style="min-width: 150px;">Señal</th>
-                <th style="min-width: 150px;">Resto</th>
+                <th></th>
+                <th class="items-sr">Señal</th>
+                <th class="items-sr">Resto</th>
                 <th>Regalo</th>
-                <th style="min-width: 300px;">Observaciones</th>
+                <th class="items-o">Observaciones</th>
                 <th>Quitar</th>
-                <th>-</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
 
             @foreach ($lista as $user)
-                <tr>
+                <tr class="grupo">
                     <td>{{ $user['name'] ." ". $user['apellidos'] }}</td>
                     <td>
                         <button onclick="contacto('{{ $user['email'] . "|" . $user['telefono'] }}');" class="btn btn-default contacto"><span class="fi-plus"> Info</span></button>
                     </td>
                     <td>
-                        <input type="text" class="form-control senal" id="senal|{{ $user['ids'] }}" value="{{ $user['senal'] }}">
+                            @if($user['senal']=="" or $user['senal']==0)
+                                <button type="submit" class="btn btn-warning btnSenal" value="{{ $user['ids'] }}" id="{{ $user['ids'] }}">No</button>
+                            @else
+                                <button type="submit" class="btn btn-success btnSenal" value="{{ $user['ids'] }}" id="{{ $user['ids'] }}">Si</button>
+                            @endif
+                    </td>
+                    <td>
+                        <input type="text" class="form-control senal" id="senal-{{ $user['ids'] }}" value="{{ $user['senal'] }}" name="senal">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     </td>
                     <td>
-                        <input type="text" class="form-control resto" id="resto|{{ $user['ids'] }}" value="{{ $user['resto'] }}">
+                        <input type="text" class="form-control resto" id="resto-{{ $user['ids'] }}" value="{{ $user['resto'] }}" name="resto">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     </td>
                     <td>
@@ -74,7 +82,7 @@
                         </form>
                     </td>
                     <td>
-                        <input type="text" class="form-control observaciones" id="observaciones|{{ $user['ids'] }}" value="{{ $user['observaciones'] }}">
+                        <input type="text" class="form-control observaciones" id="observaciones-{{ $user['ids'] }}" value="{{ $user['observaciones'] }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     </td>
                     <td>
@@ -84,29 +92,29 @@
                 </tr>
             @endforeach
 
-            <tr class="danger">
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
+            <tr class="info">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>Lista de Espera</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
+                <td></td>
+                <td></td>
             </tr>
 
             @for($i=0;$i< count($espera); $i++)
                 <tr>
                     <td>{{ $espera[$i]->name . " " . $espera[$i]->apellidos }}</td>
-                    <td>
-                        <!--<button onclick="contacto('{ { $user['email'] . "|" . $user['telefono'] }}');" class="btn btn-info contacto"><span class="fi-plus"> Info</span></button>-->
-                    </td>
+                    <td></td>
+                    <td></td>
                     <td>{{ $espera[$i]->senal }}</td>
                     <td>{{ $espera[$i]->resto }}</td>
                     <td>{{ $espera[$i]->regalo }}</td>
                     <td>{{ $espera[$i]->observaciones }}</td>
                     <td>
-                        <button class='btn btn-default' data-toggle='modal' data-target='#quitarAlumno' onclick='modal("{{ $curso->id."|".$espera[$i]->id."|1" }}");'><span class='fi-x'></span></button>
+                        <button class='btn btn-default' data-toggle='modal' data-target='#quitarAlumno' onclick='modal("{{ $curso->id."-".$espera[$i]->id."-1" }}");'><span class='fi-x'></span></button>
                     </td>
                     <td><input type="checkbox" class="chk" value="{{ $espera[$i]->email }}"></td>
                 </tr>
@@ -119,6 +127,9 @@
     <button type="button" class="btn btn-primary" id="marcar">Marcar / Desmarcar</button>
 </div>
 
+    <div class="col-sm-8 col-sm-offset-2" style="padding-top: 30px;">
+        <h3>Total: <span class="total">{{ $todo }}</span> €</h3>
+    </div>
 
     <div class="col-sm-12">
         <div class="contenedor" data-behaviour="search-on-list">
@@ -364,14 +375,39 @@
 
         $(document).ready(function(){
 
-            $(".senal").blur(function(){
+            function checkBtnSenal(btn){
+                if(btn.text()=="No"){
+                    btn.removeClass("btn-warning");
+                    btn.addClass("btn-success");
+                    btn.text("Si");
+                    return true;
+                }
+                else{
+                    btn.removeClass("btn-success");
+                    btn.addClass("btn-warning");
+                    btn.text("No");
+                    return false;
+                }
+            }
+
+            $(".btnSenal").click(function(){
+                if(checkBtnSenal($(this))){
+                    senal(50, "senal-" + $(this).val(), 0);
+                }
+                else{
+                    senal(0, "senal-" + $(this).val(), 1);
+                    resto(0, "resto-" + $(this).val());
+                }
+            });
+
+            $("input[name=senal]").keyup(function(){
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
                 $.ajax({
-                    url: "/anadir/senal",
+                    url: "/calcular/resto",
                     method: "POST",
                     data:
                     {
@@ -382,7 +418,43 @@
                 });
             });
 
-            $(".resto").blur(function(){
+            function senal(val, id, op){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "/anadir/senal",
+                    type: "POST",
+                    data:
+                    {
+                        senal : val,
+                        ids : id,
+                    }
+                }).done(function(data){
+                    var obj = jQuery.parseJSON(data);
+                    var idResto = "resto" +  id.substr(5);
+                    $("#" + idResto).val(obj.resto);
+                    $("#" + id).val(obj.senal);
+                    $(".total").text(obj.total);
+                    if(op==0){
+                        resto(obj.resto, idResto);
+                    }
+                    if($("#" + id).val() != 0){
+                        $("#" + id.substr(6)).removeClass("btn-warning");
+                        $("#" + id.substr(6)).addClass("btn-success");
+                        $("#" + id.substr(6)).text("Si");
+                    }
+                    else{
+                        $("#" + id.substr(6)).removeClass("btn-success");
+                        $("#" + id.substr(6)).addClass("btn-warning");
+                        $("#" + id.substr(6)).text("No");
+                    }
+                });
+            }
+
+            function resto(val, id){
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -390,17 +462,20 @@
                 });
                 $.ajax({
                     url: "/anadir/resto",
-                    method: "POST",
+                    type: "POST",
                     data:
                     {
-                        resto : $(this).val(),
-                        ids : $(this).attr('id'),
-                    },
-                    datatype: "text"
+                        resto : val,
+                        ids : id,
+                    }
+                }).done(function(data){
+                    var obj = jQuery.parseJSON(data);
+                    $("#" + id).val(obj.resto);
+                    $(".total").text(obj.total);
                 });
-            });
+            }
 
-            $(".observaciones").blur(function(){
+            function observaciones(val, id){
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -411,11 +486,41 @@
                     method: "POST",
                     data:
                     {
-                        observaciones : $(this).val(),
-                        ids : $(this).attr('id'),
+                        observaciones : val,
+                        ids : id,
                     },
                     datatype: "text"
                 });
+            }
+
+            $(".senal").keypress(function(e) {
+                if(e.which == 13) {
+                    senal($(this).val(), $(this).attr('id'), 0);
+                }
+            });
+
+            $(".senal").blur(function(){
+                senal($(this).val(), $(this).attr('id'), 0);
+            });
+
+            $(".resto").keypress(function(e) {
+                if(e.which == 13) {
+                    resto($(this).val(), $(this).attr('id'));
+                }
+            });
+
+            $(".resto").blur(function(){
+                resto($(this).val(), $(this).attr('id'));
+            });
+
+            $(".observaciones").keypress(function(e) {
+                if(e.which == 13) {
+                    observaciones($(this).val(), $(this).attr('id'));
+                }
+            });
+
+            $(".observaciones").blur(function(){
+                observaciones($(this).val(), $(this).attr('id'));
             });
 
             $("#marcar").click(function(){

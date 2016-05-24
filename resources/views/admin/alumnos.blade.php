@@ -3,6 +3,7 @@
 @section('header')
     @parent
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Alumnos</title>
     <style>
         .row{
@@ -58,12 +59,42 @@
                 @if ($errors->has('email')) <p class="help-block">{{ $errors->first('email') }}</p> @endif
             </div>
 
+                <div class="form-group">
+                    {{ Form::label('fechaNacimiento', 'Fecha Nacimiento') }}
+                    {{ Form::text('fechaNacimiento', \Illuminate\Support\Facades\Input::old('fechaNacimiento'), array('class' => 'form-control', 'placeholder' => 'Fecha de Nacimiento')) }}
+                    @if ($errors->has('fechaNacimiento')) <p class="help-block">{{ $errors->first('fechaNacimiento') }}</p> @endif
+                </div>
+
+                <div class="form-group">
+                    {{ Form::label('localidad', 'Localidad') }}
+                    {{ Form::text('localidad', \Illuminate\Support\Facades\Input::old('localidad'), array('class' => 'form-control', 'placeholder' => 'Localidad')) }}
+                    @if ($errors->has('localidad')) <p class="help-block">{{ $errors->first('localidad') }}</p> @endif
+                </div>
+
+                <div class="form-group">
+                    {{ Form::label('conocimientosWin', 'Conocimientos Windows') }}
+                    {{ Form::text('conocimientosWin', \Illuminate\Support\Facades\Input::old('conocimientosWin'), array('class' => 'form-control', 'placeholder' => 'Conocimientos Windows')) }}
+                    @if ($errors->has('conocimientosWin')) <p class="help-block">{{ $errors->first('conocimientosWin') }}</p> @endif
+                </div>
+
+                <div class="form-group">
+                    {{ Form::label('conocimientosFoto', 'Conocimientos Fotografía') }}
+                    {{ Form::text('conocimientosFoto', \Illuminate\Support\Facades\Input::old('conocimientosFoto'), array('class' => 'form-control', 'placeholder' => 'Conocimientos Fotografía')) }}
+                    @if ($errors->has('conocimientosFoto')) <p class="help-block">{{ $errors->first('conocimientosFoto') }}</p> @endif
+                </div>
+
+                <div class="form-group">
+                    {{ Form::label('equipamiento', 'Equipamiento') }}
+                    {{ Form::text('equipamiento', \Illuminate\Support\Facades\Input::old('equipamiento'), array('class' => 'form-control', 'placeholder' => 'Equipamiento')) }}
+                    @if ($errors->has('equipamiento')) <p class="help-block">{{ $errors->first('equipamiento') }}</p> @endif
+                </div>
+
             <div class="form-group">
                 {{ Form::label('password', 'Contraseña') }}
                 @if($alumno)
-                    {{ Form::text('password', \Illuminate\Support\Facades\Input::old('password'), array('class' => 'form-control', 'placeholder' => 'contraseña', 'readonly' => 'false')) }}
+                    {{ Form::text('password', \Illuminate\Support\Facades\Input::old('password'), array('class' => 'form-control', 'placeholder' => 'contraseña (opcional)', 'readonly' => 'false')) }}
                 @else
-                    {{ Form::text('password', \Illuminate\Support\Facades\Input::old('password'), array('class' => 'form-control', 'placeholder' => 'contraseña')) }}
+                    {{ Form::text('password', \Illuminate\Support\Facades\Input::old('password'), array('class' => 'form-control', 'placeholder' => 'contraseña (opcional)')) }}
                 @endif
                 @if ($errors->has('password')) <p class="help-block">{{ $errors->first('password') }}</p> @endif
             </div>
@@ -71,7 +102,7 @@
             @if($alumno == false)
             <div class="form-group">
                 {{ Form::label('password_confirmation', 'Confirmar Contraseña') }}
-                {{ Form::text('password_confirmation', \Illuminate\Support\Facades\Input::old('password_confirmation'), array('class' => 'form-control', 'placeholder' => 'Confirmar Contraseña')) }}
+                {{ Form::text('password_confirmation', \Illuminate\Support\Facades\Input::old('password_confirmation'), array('class' => 'form-control', 'placeholder' => 'Confirmar Contraseña (opcional)')) }}
                 @if ($errors->has('password_confirmation')) <p class="help-block">{{ $errors->first('password_confirmation') }}</p> @endif
             </div>
             @endif
@@ -119,8 +150,26 @@
         $(document).ready(function(){
             $("#itemcuatro").addClass("active");
 
+            $('#enviar').click(function(){
+                alert("Por el momento lo desactivo para no liarla");
+                /*$.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "/alumnos/emails",
+                    method: "POST",
+                    data:
+                    {
+                        idPlantilla : $("#plantillas").val(),
+                    },
+                    datatype: "text"
+                });*/
+            });
+
             $(function() {
-                $('#alumnos-table').DataTable({
+                var dataTable = $('#alumnos-table').DataTable({
                     processing: true,
                     serverSide: true,
                     ajax: '{!! route('datatablesAlumnos.data') !!}',

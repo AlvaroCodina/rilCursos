@@ -2,6 +2,16 @@
 
     <div class="page-header">
         <h1><span class="fi-torsos-all"></span> Listado de Alumnos</h1>
+
+        <div class="form-group">
+            <select name="plantillas" id="plantillas" class="form-control">
+                @foreach($plantillas as $plantilla)
+                    <option value="{{ $plantilla->id }}">{{ $plantilla->nombre }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <button class="btn btn-info" id="enviar">Enviar <span class="fi-mail"></span></button>
     </div>
 
 </div>

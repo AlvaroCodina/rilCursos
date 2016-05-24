@@ -6,12 +6,16 @@
     .padd-bottom{ padding-bottom: 50px; }
     .vacio{ height: 50px; }
     .separacion{ margin-top: 25px; margin-bottom: 25px; }
+    .items-sr{ min-width: 80px; }
+    .items-o{ min-width: 300px; }
 }
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
     .vacio{ height: 100px; }
     .separacion{ margin-top: 50px; margin-bottom: 50px; }
+    .items-sr{ min-width: 80px; }
+    .items-o{ min-width: 300px; }
 }
 
 /* Medium devices (desktops, 992px and up) */
@@ -24,6 +28,8 @@
 @media (min-width: 1200px) {
     .vacio{ height: 200px; }
     .separacion{ margin-top: 100px; margin-bottom: 100px; }
+    .items-sr{ width: 80px; }
+    .items-o{ min-width: 300px; }
 }
 
 .color{ width: 50px; height: 50px; }

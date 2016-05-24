@@ -105,7 +105,7 @@
             });
 
             $(function() {
-                $('#categorias-table').DataTable({
+                var dataTable = $('#categorias-table').DataTable({
                     processing: true,
                     serverSide: true,
                     ajax: '{!! route('datatablesCategorias.data') !!}',

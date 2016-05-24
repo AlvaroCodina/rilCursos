@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" >
+    <link rel="icon" href="{{ asset('favicon.ico') }}" >
 @section('header')
 
     {!! Html::style('bootstrap/css/bootstrap.min.css') !!}
@@ -62,7 +62,18 @@
     <script src="//cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
     <script src="//cdn.datatables.net/responsive/2.0.2/js/responsive.bootstrap.min.js"></script>
     {!! Html::script('bootstrap/js/bootstrap.min.js') !!}
+    <script>
+    $(document).ready(function(){
 
+        $.extend(true, $.fn.dataTable.defaults, {
+            "stateSave": true,
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+            }
+        });
+
+    });
+    </script>
 @show
 
 </body>

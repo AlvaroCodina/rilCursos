@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Plantillas;
 use App\UsersCursos;
 use Illuminate\Http\Request;
 use App\User;
@@ -19,7 +20,8 @@ class AdminAlumnosController extends Controller
      */
     public function index()
     {
-        return view('admin.alumnos')->with('alumno', false);
+        $plantillas = Plantillas::all();
+        return view('admin.alumnos')->with('alumno', false)->with('plantillas', $plantillas);
     }
 
     /**
@@ -43,10 +45,10 @@ class AdminAlumnosController extends Controller
         $rules = array(
             'name'      => 'required',
             'apellidos' => 'required',
-            'telefono'  => 'required|integer',
+            'telefono'  => 'required',  //|integer
             'email'     => 'required|email|unique:users',
-            'password'  => 'required',
-            'password_confirmation'  => 'required|same:password',
+            //'password'  => 'required',
+            //'password_confirmation'  => 'required|same:password',
         );
 
         $messages = [
@@ -61,7 +63,8 @@ class AdminAlumnosController extends Controller
 
         if ($validator->fails()) {
             Input::flash();
-            return view('admin.alumnos')->with('alumno', false)->withInput(Input::all())->withErrors($validator);
+            $plantillas = Plantillas::all();
+            return view('admin.alumnos')->with('alumno', false)->withInput(Input::all())->withErrors($validator)->with('plantillas', $plantillas);
 
         } else {
 
@@ -93,8 +96,8 @@ class AdminAlumnosController extends Controller
     public function edit($id)
     {
         $alumno = User::find($id);
-
-        return view('admin.alumnos')->with('alumno', $alumno);
+        $plantillas = Plantillas::all();
+        return view('admin.alumnos')->with('alumno', $alumno)->with('plantillas', $plantillas);
     }
 
     /**
@@ -109,9 +112,9 @@ class AdminAlumnosController extends Controller
         $rules = array(
             'name'      => 'required',
             'apellidos' => 'required',
-            'telefono'  => 'required|integer',
+            'telefono'  => 'required',  //|integer
             'email'     => 'required|email',
-            'password'  => 'required',
+            //'password'  => 'required',
         );
 
         $messages = [
@@ -124,13 +127,19 @@ class AdminAlumnosController extends Controller
 
         if ($validator->fails()) {
             Input::flash();
-            return view('admin.alumnos')->with('alumno', false)->withInput(Input::all())->withErrors($validator);
+            $plantillas = Plantillas::all();
+            return view('admin.alumnos')->with('alumno', false)->withInput(Input::all())->withErrors($validator)->with('plantillas', $plantillas);
         } else {
             $alumno = User::find($id);
             $alumno->name      = Input::get('name');
             $alumno->apellidos = Input::get('apellidos');
             $alumno->telefono  = Input::get('telefono');
             $alumno->email     = Input::get('email');
+            $alumno->localidad = Input::get('localidad');
+            $alumno->fechaNacimiento = Input::get('fechaNacimiento');
+            $alumno->conocimientosWin = Input::get('conocimientosWin');
+            $alumno->conocimientosFoto = Input::get('conocimientosFoto');
+            $alumno->equipamiento = Input::get('equipamiento');
             //$alumno->password  = Input::get('password');
             $alumno->camara    = Input::get('camara');
             $alumno->update();

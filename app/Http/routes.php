@@ -66,10 +66,12 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/admin/cursosalumnos/{id}', 'AlumnosCursosController@getCursosAlumno')->where('id', '[0-9]+');
         Route::any('/admin/cursosalumnos/{ids}', 'AlumnosCursosController@deleteCursosAlumno')->where('ids', '[\s\S]+');
         Route::post('/alumnoscursos/textoregalo/{regalo}/{ids}', 'AdminAlumnosCursosController@getTextoRegalo');
+        Route::post('/alumnoscursos/textosenal/{senal}/{ids}', 'AdminAlumnosCursosController@getTextoSenal');
         Route::any('/alumnoscursos/insertaralumno/{idCurso}/{idAlumno}', 'AdminAlumnosCursosController@insertAlumnoCurso');
         Route::any('/anadir/senal', 'AdminAlumnosCursosController@anadirSenal');
         Route::any('/anadir/resto', 'AdminAlumnosCursosController@anadirResto');
         Route::any('/anadir/observaciones', 'AdminAlumnosCursosController@anadirObservaciones');
+        Route::any('/calcular/resto', 'AdminAlumnosCursosController@calcularResto');
         Route::any('/verplantilla/{idPlantilla}/{id}', 'AdminMailsController@getTemplate');
         Route::any('/admin/listaespera/{ids}', 'ListaEsperaController@quitarAlumno');
         Route::any('/admin/listainteresados/{id}', 'ListaInteresadosController@show');
@@ -87,10 +89,11 @@ Route::group(['middleware' => 'admin'], function () {
 
 });
 
-/* API mails */
+/* mails */
 
 
 Route::post('/alumnoscursos/emails', 'AdminMailsController@sendMails');
+Route::any('/alumnos/emails', 'AdminMailsController@sendAlumnosMails');
 
 
 /* PRUEBAS */

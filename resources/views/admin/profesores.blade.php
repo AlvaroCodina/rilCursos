@@ -77,7 +77,7 @@
             $("#itemcinco").addClass("active");
 
             $(function() {
-                $('#profesores-table').DataTable({
+                var dataTable = $('#profesores-table').DataTable({
                     processing: true,
                     serverSide: true,
                     ajax: '{!! route('datatablesProfesores.data') !!}',

@@ -117,7 +117,7 @@
             $("#itemtres").addClass("active");
 
             $(function() {
-                $('#cursos-table').DataTable({
+                var dataTable = $('#cursos-table').DataTable({
                     processing: true,
                     serverSide: true,
                     ajax: '{!! route('datatables.data') !!}',
