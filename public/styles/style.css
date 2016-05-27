@@ -2,6 +2,11 @@
 .separacion{ height: 200px; background-color: lightgray; width: 100%; }
 .separacion h3{ margin-top: 87px; }
 
+.descripcionpeque{
+    max-height: 100px;
+    overflow: hidden;
+}
+
 @media (max-width: 767px) {
     .padd-bottom{ padding-bottom: 50px; }
     .vacio{ height: 50px; }
@@ -141,7 +146,21 @@
     float: right;
 }
 
+.interesado{
+    display: block;
+    height: 30px;
+    width: 170px;
+    background-color: lightblue;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-right: 15px;
+    z-index: 3;
+}
+.interesado a{ font-size: 20px; margin-left: 20px; }
+.interesado a:hover{ cursor: pointer; text-decoration: none; }
 
+.darse-baja:hover{ cursor: pointer; text-decoration: none; }
 
 
 

@@ -22,7 +22,7 @@
                         <p><a href="/cursos/{{ $curso->slug }}"><img src="{{ route('curso.imagen', ['filename' => 'curso-'.$curso->slug.'.jpg']) }}" class="img-responsive center-block" /></a></p>
                     @endif
                     <h3><a href="/cursos/{{ $curso->slug }}">{{ $curso->resumen }}</a></h3>
-                    <p>{{ $curso->descripcion }}</p>
+                    <p class="descripcionpeque">{{ $curso->descripcion }}</p>
                     <p>{{ $curso->fechaInicio . ' ' . $curso->horario }}</p>
                     <div class="links">
                         <div class="link-effect-9" id="link-effect-9">

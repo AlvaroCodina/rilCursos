@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -37,4 +38,39 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Cursos','users_cursos','users_id');
     }
+
+    public static function ListaEspera($alumno)
+    {
+
+        $res = array();
+
+        $lista = DB::table('lista_espera')->where('users_id', $alumno->id)->pluck('cursos_id');
+        for ($i = 0; $i < count($lista); $i++) {
+            $res[] = DB::table('cursos')->where('id', $lista[$i])->get();
+        }
+
+        if ($res == null) {
+            return 0;
+        } else {
+            return $res;
+        }
+    }
+
+    public static function ListaInteres($alumno)
+    {
+
+        $res = array();
+
+        $lista = DB::table('lista_interesados')->where('users_id', $alumno->id)->pluck('cursos_id');
+        for ($i = 0; $i < count($lista); $i++) {
+            $res[] = DB::table('cursos')->where('id', $lista[$i])->get();
+        }
+
+        if ($res == null) {
+            return 0;
+        } else {
+            return $res;
+        }
+    }
+
 }

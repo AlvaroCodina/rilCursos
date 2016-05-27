@@ -33,6 +33,9 @@
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-left">
+                    <li id="itemtuno"><a href="/cursos">WEB</a></li>
+                </ul>
                 <ul class="nav navbar-nav">
 
                     <li id="itemtres"><a href="/admin/cursos">Cursos</a></li>

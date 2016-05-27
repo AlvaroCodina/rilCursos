@@ -51,6 +51,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/register', 'UserController@postRegister');
     Route::get('/logout', 'UserController@logout');
     Route::post('/pagar', 'AlumnosCursosController@postPagar');
+
+    Route::any('/datos', 'AlumnosCursosController@getDatos');
+    Route::any('/datos/{id}', 'AlumnosCursosController@editarAlumno')->where('id', '[0-9]+');
+    Route::any('/datos/update', 'AlumnosCursosController@updateAlumno');
+
+    Route::any('/datos/profesor/{id}', 'ProfesoresController@getProfesor')->where('id', '[0-9]+');
+
+    Route::any('/interes', 'AlumnosCursosController@interesado');
+    Route::any('/interes/baja', 'AlumnosCursosController@bajaInteresado');
+
 });
 
 Route::group(['middleware' => 'admin'], function () {
@@ -94,6 +104,9 @@ Route::group(['middleware' => 'admin'], function () {
 
 Route::post('/alumnoscursos/emails', 'AdminMailsController@sendMails');
 Route::any('/alumnos/emails', 'AdminMailsController@sendAlumnosMails');
+Route::any('/plantillas/emails', 'AdminMailsController@editPlantilla');
+Route::any('/plantillas/update', 'AdminMailsController@updatePlantilla');
+Route::any('/plantillas/sendPrueba', 'AdminMailsController@sendPlantilla');
 
 
 /* PRUEBAS */

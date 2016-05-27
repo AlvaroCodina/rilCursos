@@ -76,7 +76,10 @@
     </div>
     <div class="form-group col-md-12">
         <label for="contenidoHtml">Contenido</label>
-        <textarea name="contenidoHtml" class="form-control" id="contenidoHtml" rows="4" cols="50" placeholder="Para poner contenido HTML al curso">{{ $curso->contenidoHtml }}</textarea>
+        <!--<textarea name="contenidoHtml" class="form-control" id="contenidoHtml" rows="4" cols="50" placeholder="Para poner contenido HTML al curso">{ { $curso->contenidoHtml }}</textarea>-->
+        <textarea class="ckeditor" name="contenidoHtml" id="contenidoHtml" rows="10" cols="80">
+            {{ printf($curso->contenidoHtml) }}
+        </textarea>
     </div>
     <div class="col-md-12">
         <button type="submit" class="btn btn-primary">Enviar</button>

@@ -6,6 +6,7 @@
     @section('header')
         {!! Html::style('bootstrap/css/bootstrap.min.css') !!}
         {!! Html::style('bootstrap/css/bootstrap-theme.min.css') !!}
+        {!! Html::style('foundation-icons/foundation-icons.css') !!}
         {!! Html::style('styles/style.css') !!}
     @show
 </head>
@@ -40,6 +41,7 @@
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ url('/datos') }}"><i class="fa fa-btn fa-torso"></i>Datos personales</a></li>
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Cerrar Sesión</a></li>
                         </ul>
                     </li>

@@ -8,7 +8,7 @@ class Cursos extends Model
 {
     protected $table = 'cursos';
 
-    protected $fillable = array('idCategoria', 'idProfesor', 'numMax', 'numMin', 'resumen', 'descripcion', 'lugar', 'imagen', 'fechaInicio', 'duracion', 'horario', 'precios', 'contenidosHtml', 'slug');
+    protected $fillable = array('idCategoria', 'idProfesor', 'numMax', 'numMin', 'resumen', 'descripcion', 'lugar', 'imagen', 'fechaInicio', 'duracion', 'horario', 'precios', 'contenidoHtml', 'slug');
 
 
 

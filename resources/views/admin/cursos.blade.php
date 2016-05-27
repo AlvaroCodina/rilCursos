@@ -66,6 +66,8 @@
 @section('footer')
     @parent
 
+    {!! Html::script('vendors/ckeditor/ckeditor.js') !!}
+
     <script>
         $(document).ready(function(){
 

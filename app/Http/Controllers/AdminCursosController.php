@@ -174,6 +174,8 @@ class AdminCursosController extends Controller
             $curso->horario     = Input::get('horario');
             $curso->precios     = Input::get('precios');
             $curso->slug        = Input::get('slug');
+            $curso->contenidoHtml = Input::get('contenidoHtml');
+
             $curso->update();
 
             $file = $request->file('foto');

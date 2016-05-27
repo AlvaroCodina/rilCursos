@@ -53,7 +53,12 @@ class UserController extends Controller
         $credentials  = ['email' => $request->get('email'), 'password' => $request->get('password')];
 
         if( Auth::guard('web')->attempt($credentials) ){
-            return Redirect()->back();
+            if ($request->is('/login')) {
+                return redirect("/cursos");
+            }
+            else{
+                return Redirect()->back();
+            }
         }else{
             Input::flash();
             return view('auth.login')->withInput(Input::all())->with('valido', 'El email o la contraseña no son correctos!');
@@ -88,7 +93,12 @@ class UserController extends Controller
 
         Auth::guard('web')->login(User::create($request->all()));
 
-        return Redirect()->back();
+        if ($request->is('/register')) {
+            return redirect("/cursos");
+        }
+        else{
+            return Redirect()->back();
+        }
     }
 
     public function logout()

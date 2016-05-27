@@ -83,7 +83,7 @@ class AdminAlumnosCursosController extends Controller
         if($datos == null && $datos2 == null){
             $contAlumno = UsersCursos::where('cursos_id', $idCurso)->count();
             $curso = Cursos::find($idCurso);
-            if($contAlumno >= $curso->max){
+            if($contAlumno >= $curso->numMax){
                 DB::table('lista_espera')->insert(
                     array('cursos_id' => $idCurso, 'users_id' => $idAlumno, 'regalo' => 0)
                 );
